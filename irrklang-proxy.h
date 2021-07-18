@@ -19,7 +19,7 @@ namespace ikProxy
 
 IPAPI irrklang::ISoundEngine* KDECL createIrrKlangDevice(irrklang::E_SOUND_OUTPUT_DRIVER driver = irrklang::ESOD_AUTO_DETECT,
 	int options = irrklang::ESEO_DEFAULT_OPTIONS,
-	const char* deviceID = 0,
+	const char* deviceID = nullptr,
 	const char* sdk_version_do_not_use = IRR_KLANG_VERSION
 );
 
@@ -31,7 +31,7 @@ IPAPI irrklang::ISoundDeviceList* KDECL createSoundDeviceList(
 IPAPI irrklang::IAudioRecorder* KDECL createIrrKlangAudioRecorder(
 	irrklang::ISoundEngine* irrKlangDeviceForPlayback,
 	irrklang::E_SOUND_OUTPUT_DRIVER driver = irrklang::ESOD_AUTO_DETECT,
-	const char* deviceID = 0,
+	const char* deviceID = nullptr,
 	const char* sdk_version_do_not_use = IRR_KLANG_VERSION
 );
 
@@ -43,6 +43,45 @@ IPAPI irrklang::ISoundDeviceList* KDECL createAudioRecorderDeviceList(
 IPAPI bool KDECL makeUTF8fromUTF16string(
 	const wchar_t* pInputString, char* pOutputBuffer, int outputBufferSize
 );
+
+namespace SAudioStreamFormat
+{
+	IPAPI irrklang::SAudioStreamFormat KDECL makeDefaultFormat();
+	IPAPI irrklang::SAudioStreamFormat KDECL makeFormat(
+		int channelCount,
+		int frameCount,
+		int sampleRate,
+		irrklang::ESampleFormat sampleFormat
+	);
+	IPAPI void KDECL setChannelCount(irrklang::SAudioStreamFormat& format, int channelCount);
+	IPAPI int  KDECL getChannelCount(const irrklang::SAudioStreamFormat& format);
+
+	IPAPI void  KDECL setFrameCount(irrklang::SAudioStreamFormat& format, int frameCount);
+	IPAPI int  KDECL getFrameCount(const irrklang::SAudioStreamFormat& format);
+
+	IPAPI void  KDECL setSampleRate(irrklang::SAudioStreamFormat& format, int sampleRate);
+	IPAPI int  KDECL getSampleRate(const irrklang::SAudioStreamFormat& format);
+
+	IPAPI void  KDECL setSampleFormat(irrklang::SAudioStreamFormat& format, irrklang::ESampleFormat sampleFormat);
+	IPAPI irrklang::ESampleFormat  KDECL getSampleFormat(const irrklang::SAudioStreamFormat& format);
+
+	IPAPI irrklang::ik_s32  KDECL getSampleSize(const irrklang::SAudioStreamFormat& format);
+	irrklang::ik_s32  KDECL getFrameSize(const irrklang::SAudioStreamFormat& format);
+	irrklang::ik_s32  KDECL getSampleDataSize(const irrklang::SAudioStreamFormat& format);
+	irrklang::ik_s32  KDECL getBytesPerSecond(const irrklang::SAudioStreamFormat& format);
+	
+}
+
+namespace SInternalAudioInterface
+{
+	IPAPI void*  KDECL getIDirectSound(const irrklang::SInternalAudioInterface& i);
+	IPAPI void*  KDECL getIDirectSound8(const irrklang::SInternalAudioInterface& i);
+	IPAPI void*  KDECL getWinMM_HWaveOut(const irrklang::SInternalAudioInterface& i);
+	IPAPI void*  KDECL getALSA_SND_PCM(const irrklang::SInternalAudioInterface& i);
+
+	IPAPI irrklang::ik_u32  KDECL getCoreAudioDeviceID(const irrklang::SInternalAudioInterface& i);
+	
+}
 
 namespace SoundEngine
 {
@@ -107,10 +146,7 @@ IPAPI irrklang::ISoundSource* KDECL addSoundSourceFromPCMData(
 	void* memory, 
 	int sizeInBytes, 
 	const char* soundName, 
-	int channelCount,
-	int frameCount,
-	int sampleRate,
-	irrklang::ESampleFormat sampleFormat,
+	const irrklang::SAudioStreamFormat& format,
 	bool copyMemory = true
 );
 
@@ -149,6 +185,8 @@ IPAPI void KDECL setRolloffFactor(irrklang::ISoundEngine* engine, float rolloff)
 
 IPAPI void KDECL setDopplerEffectParameters(irrklang::ISoundEngine* engine, float dopplerFactor = 1.0f, float distanceFactor = 1.0f);
 IPAPI bool KDECL loadPlugins(irrklang::ISoundEngine* engine, const char* path);
+
+IPAPI const irrklang::SInternalAudioInterface& KDECL getInternalAudioInterface(irrklang::ISoundEngine* engine);
 
 }
 

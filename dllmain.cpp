@@ -1,7 +1,5 @@
-﻿// dllmain.cpp : Определяет точку входа для приложения DLL.
-#include "irrklang-proxy.h"
-#define WIN32_LEAN_AND_MEAN             // Исключите редко используемые компоненты из заголовков Windows
-// Файлы заголовков Windows
+﻿#include "irrklang-proxy.h"
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
 irrklang::ISoundEngine* ikProxy::createIrrKlangDevice(irrklang::E_SOUND_OUTPUT_DRIVER driver,
@@ -46,11 +44,111 @@ bool ikProxy::makeUTF8fromUTF16string(
 	return irrklang::makeUTF8fromUTF16string(pInputString, pOutputBuffer, outputBufferSize);
 }
 
+irrklang::SAudioStreamFormat ikProxy::SAudioStreamFormat::makeDefaultFormat()
+{
+	return { 2, -1, 44100, irrklang::ESF_U8 };
+}
+
+irrklang::SAudioStreamFormat ikProxy::SAudioStreamFormat::makeFormat(
+	int channelCount,
+	int frameCount,
+	int sampleRate,
+	irrklang::ESampleFormat sampleFormat
+)
+{
+	return { channelCount, frameCount, sampleRate, sampleFormat };
+}
+
+void ikProxy::SAudioStreamFormat::setChannelCount(irrklang::SAudioStreamFormat& format, int channelCount)
+{
+	format.ChannelCount = channelCount;
+}
+
+
+int ikProxy::SAudioStreamFormat::getChannelCount(const irrklang::SAudioStreamFormat& format)
+{
+	return format.ChannelCount;
+}
+
+void ikProxy::SAudioStreamFormat::setFrameCount(irrklang::SAudioStreamFormat& format, int frameCount)
+{
+	format.FrameCount = frameCount;
+}
+
+int ikProxy::SAudioStreamFormat::getFrameCount(const irrklang::SAudioStreamFormat& format)
+{
+	return format.FrameCount;
+}
+
+void ikProxy::SAudioStreamFormat::setSampleRate(irrklang::SAudioStreamFormat& format, int sampleRate)
+{
+	format.SampleRate = sampleRate;
+}
+
+int ikProxy::SAudioStreamFormat::getSampleRate(const irrklang::SAudioStreamFormat& format)
+{
+	return format.SampleRate;
+}
+
+void ikProxy::SAudioStreamFormat::setSampleFormat(irrklang::SAudioStreamFormat& format, irrklang::ESampleFormat sampleFormat)
+{
+	format.SampleFormat = sampleFormat;
+}
+
+irrklang::ESampleFormat ikProxy::SAudioStreamFormat::getSampleFormat(const irrklang::SAudioStreamFormat& format)
+{
+	return format.SampleFormat;
+}
+
+irrklang::ik_s32 ikProxy::SAudioStreamFormat::getSampleSize(const irrklang::SAudioStreamFormat& format)
+{
+	return format.getSampleSize();
+}
+
+irrklang::ik_s32 ikProxy::SAudioStreamFormat::getFrameSize(const irrklang::SAudioStreamFormat& format)
+{
+	return format.getFrameSize();
+}
+
+irrklang::ik_s32 ikProxy::SAudioStreamFormat::getSampleDataSize(const irrklang::SAudioStreamFormat& format)
+{
+	return format.getSampleDataSize();
+}
+
+irrklang::ik_s32 ikProxy::SAudioStreamFormat::getBytesPerSecond(const irrklang::SAudioStreamFormat& format)
+{
+	return format.getBytesPerSecond();
+}
+
+void* ikProxy::SInternalAudioInterface::getIDirectSound(const irrklang::SInternalAudioInterface& i)
+{
+	return i.pIDirectSound;
+}
+
+void* ikProxy::SInternalAudioInterface::getIDirectSound8(const irrklang::SInternalAudioInterface& i)
+{
+	return i.pIDirectSound8;
+}
+
+void* ikProxy::SInternalAudioInterface::getWinMM_HWaveOut(const irrklang::SInternalAudioInterface& i)
+{
+	return i.pWinMM_HWaveOut;
+}
+
+void* ikProxy::SInternalAudioInterface::getALSA_SND_PCM(const irrklang::SInternalAudioInterface& i)
+{
+	return i.pALSA_SND_PCM;
+}
+
+irrklang::ik_u32 ikProxy::SInternalAudioInterface::getCoreAudioDeviceID(const irrklang::SInternalAudioInterface& i)
+{
+	return i.pCoreAudioDeciceID;
+}
+
 const char* ikProxy::SoundEngine::getDriverName(irrklang::ISoundEngine* engine)
 {
 	return engine->getDriverName();
 }
-
 
 irrklang::ISound* ikProxy::SoundEngine::play2DFileName(
 	irrklang::ISoundEngine* engine,
@@ -147,18 +245,10 @@ irrklang::ISoundSource*  ikProxy::SoundEngine::addSoundSourceFromPCMData(
 	void* memory, 
 	int sizeInBytes, 
 	const char* soundName, 
-	int channelCount,
-	int frameCount,
-	int sampleRate,
-	irrklang::ESampleFormat sampleFormat,
+	const irrklang::SAudioStreamFormat& format,
 	bool copyMemory
 )
 {
-	irrklang::SAudioStreamFormat format{};
-	format.ChannelCount = channelCount;
-	format.FrameCount = frameCount;
-	format.SampleRate = sampleRate;
-	format.SampleFormat = sampleFormat;
 	return engine->addSoundSourceFromPCMData(memory, sizeInBytes, soundName, format, copyMemory);
 }
 
@@ -267,6 +357,11 @@ void ikProxy::SoundEngine::setDopplerEffectParameters(irrklang::ISoundEngine* en
 bool ikProxy::SoundEngine::loadPlugins(irrklang::ISoundEngine* engine, const char* path)
 {
 	return engine->loadPlugins(path);
+}
+
+const irrklang::SInternalAudioInterface& ikProxy::SoundEngine::getInternalAudioInterface(irrklang::ISoundEngine* engine)
+{
+	return engine->getInternalAudioInterface();
 }
 
 int ikProxy::SoundDeviceList::getDeviceCount(irrklang::ISoundDeviceList* list)
