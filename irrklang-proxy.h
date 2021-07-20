@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <irrKlang.h>
+#include <functional>
 
 #ifdef IRRKLANGPROXY_EXPORTS
 	// ReSharper disable once IdentifierTypo
@@ -14,7 +15,7 @@
 
 extern "C"
 {
-namespace ikProxy
+namespace irrklangProxy
 {
 
 IPAPI irrklang::ISoundEngine* KDECL createIrrKlangDevice(irrklang::E_SOUND_OUTPUT_DRIVER driver = irrklang::ESOD_AUTO_DETECT,
@@ -43,6 +44,10 @@ IPAPI irrklang::ISoundDeviceList* KDECL createAudioRecorderDeviceList(
 IPAPI bool KDECL makeUTF8fromUTF16string(
 	const wchar_t* pInputString, char* pOutputBuffer, int outputBufferSize
 );
+
+IPAPI void KDECL grabRefCounted(irrklang::IRefCounted* p);
+IPAPI void KDECL dropRefCounted(irrklang::IRefCounted* p);
+	
 
 namespace SAudioStreamFormat
 {
@@ -80,7 +85,79 @@ namespace SInternalAudioInterface
 	IPAPI void*  KDECL getALSA_SND_PCM(const irrklang::SInternalAudioInterface& i);
 
 	IPAPI irrklang::ik_u32  KDECL getCoreAudioDeviceID(const irrklang::SInternalAudioInterface& i);
-	
+}
+
+typedef void (*dtorFn)(void* user_data);
+
+namespace IAudioStream
+{
+	typedef irrklang::SAudioStreamFormat (*getFormatFn)(void* user_data);
+	typedef bool (*setPositionFn)(void* user_data, irrklang::ik_s32 pos);
+	typedef bool (*getIsSeekingSupportedFn)(void* user_data);
+	typedef irrklang::ik_s32 (*readFramesFn)(void* user_data, void* target, irrklang::ik_s32 frameCountToRead);
+
+	IPAPI void KDECL grabAudioStream(irrklang::IAudioStream* stream);
+	IPAPI void KDECL dropAudioStream(irrklang::IAudioStream* stream);
+
+	IPAPI irrklang::IAudioStream* KDECL makeAudioStream(
+		void* user_data, 
+		irrklangProxy::dtorFn dtor, getFormatFn getFormat, 
+		irrklangProxy::IAudioStream::setPositionFn setPosition, 
+		irrklangProxy::IAudioStream::getIsSeekingSupportedFn getIsSeekingSupported, 
+		irrklangProxy::IAudioStream::readFramesFn readFrames
+	);
+
+	IPAPI irrklang::SAudioStreamFormat KDECL getFormat(irrklang::IAudioStream* stream);
+	IPAPI bool KDECL setPosition(irrklang::IAudioStream* stream, irrklang::ik_s32 pos);
+	IPAPI bool KDECL getIsSeekingSupported(irrklang::IAudioStream* stream);
+	IPAPI irrklang::ik_s32 KDECL readFrames(irrklang::IAudioStream* stream, void* target, irrklang::ik_s32 frameCountToRead);
+}
+
+namespace IAudioStreamLoader
+{
+	typedef bool(*isALoadableFileExtensionFn)(void* user_data, const char* fileName);
+	typedef irrklang::IAudioStream* (*createAudioStreamFn)(void* user_data, irrklang::IFileReader* file);
+
+	IPAPI void KDECL grabAudioStreamLoader(irrklang::IAudioStreamLoader* stream);
+	IPAPI void KDECL dropAudioStreamLoader(irrklang::IAudioStreamLoader* stream);
+
+	IPAPI irrklang::IAudioStreamLoader* KDECL makeAudioStreamLoader(
+		void* user_data, 
+		irrklangProxy::dtorFn dtor, 
+		irrklangProxy::IAudioStreamLoader::isALoadableFileExtensionFn isALoadableFileExtensionVal, 
+		irrklangProxy::IAudioStreamLoader::createAudioStreamFn createAudioStreamVal
+	);
+
+	IPAPI bool KDECL isALoadableFileExtension(irrklang::IAudioStreamLoader* stream, const irrklang::ik_c8* fileName);
+	IPAPI irrklang::IAudioStream* KDECL createAudioStream(irrklang::IAudioStreamLoader* stream, irrklang::IFileReader* reader);
+}
+
+namespace IFileReader
+{
+	typedef irrklang::ik_s32 (*readFn)(void* user_data, void* buffer, irrklang::ik_u32 sizeToRead);
+	typedef bool (*seekFn)(void* user_data, irrklang::ik_s32 finalPos, bool relativeMovement);
+	typedef irrklang::ik_s32 (*getSizeFn)(void* user_data);
+	typedef irrklang::ik_s32 (*getPosFn)(void* user_data);
+	typedef const irrklang::ik_c8* (*getFileNameFn)(void* user_data);
+
+	IPAPI void KDECL grabFileReader(irrklang::IFileReader* reader);
+	IPAPI void KDECL dropFileReader(irrklang::IFileReader* reader);
+
+	IPAPI irrklang::IFileReader* KDECL makeFileReader(
+		void* user_data, 
+		irrklangProxy::dtorFn dtor, 
+		irrklangProxy::IFileReader::readFn readVal, 
+		irrklangProxy::IFileReader::seekFn seekVal,
+		irrklangProxy::IFileReader::getSizeFn getSizeVal,
+		irrklangProxy::IFileReader::getPosFn getPosVal,
+		irrklangProxy::IFileReader::getFileNameFn getFileNameVal
+	);
+
+	IPAPI irrklang::ik_s32 KDECL read(irrklang::IFileReader* reader, void* buffer, irrklang::ik_u32 sizeToRead);
+	IPAPI bool KDECL seek(irrklang::IFileReader* reader, irrklang::ik_s32 finalPos, bool relativeMovement = false);
+	IPAPI irrklang::ik_s32 KDECL getSize(irrklang::IFileReader* reader);
+	IPAPI irrklang::ik_s32 KDECL getPos(irrklang::IFileReader* reader);
+	IPAPI const irrklang::ik_c8* KDECL getFileName(irrklang::IFileReader* reader);
 }
 
 namespace SoundEngine
@@ -173,6 +250,8 @@ IPAPI bool KDECL isCurrentlyPlayingByName(irrklang::ISoundEngine* engine, const 
 
 IPAPI bool KDECL isCurrentlyPlayingBySource(irrklang::ISoundEngine* engine, irrklang::ISoundSource* source);
 
+IPAPI void KDECL registerAudioStreamLoader(irrklang::ISoundEngine* engine, irrklang::IAudioStreamLoader* loader);
+
 IPAPI bool KDECL isMultiThreaded(irrklang::ISoundEngine* engine);
 
 IPAPI void KDECL setDefault3DSoundMinDistance(irrklang::ISoundEngine* engine, float minDistance);
@@ -186,8 +265,9 @@ IPAPI void KDECL setRolloffFactor(irrklang::ISoundEngine* engine, float rolloff)
 IPAPI void KDECL setDopplerEffectParameters(irrklang::ISoundEngine* engine, float dopplerFactor = 1.0f, float distanceFactor = 1.0f);
 IPAPI bool KDECL loadPlugins(irrklang::ISoundEngine* engine, const char* path);
 
-IPAPI const irrklang::SInternalAudioInterface& KDECL getInternalAudioInterface(irrklang::ISoundEngine* engine);
+IPAPI const irrklang::SInternalAudioInterface* KDECL getInternalAudioInterface(irrklang::ISoundEngine* engine);
 
+	
 }
 
 namespace SoundDeviceList
@@ -203,4 +283,99 @@ IPAPI void KDECL dropSoundDeviceList(irrklang::ISoundDeviceList* list);
 
 }
 
+}
+
+
+
+namespace irrklangProxy
+{
+
+template<int Id = 0>
+class AudioStream  // NOLINT(cppcoreguidelines-special-member-functions)
+{
+public: 
+	virtual ~AudioStream() {}
+	virtual irrklang::SAudioStreamFormat getFormat() = 0;
+	virtual bool setPosition(irrklang::ik_s32 pos) = 0;
+	virtual bool getIsSeekingSupported() { return true; }
+	virtual irrklang::ik_s32 readFrames(void* target, irrklang::ik_s32 frameCountToRead) = 0;
+};
+
+template<int Id = 0>
+class AudioStreamLoader  // NOLINT(cppcoreguidelines-special-member-functions)
+{
+public: 
+	virtual ~AudioStreamLoader() {}
+	virtual bool isALoadableFileExtension(const irrklang::ik_c8* fileName) = 0;
+	virtual irrklang::IAudioStream* createAudioStream(irrklang::IFileReader* file) = 0;
+};
+
+template<int Id = 0>
+class FileReader  // NOLINT(cppcoreguidelines-special-member-functions)
+{
+public: 
+	virtual ~FileReader() {}
+	virtual irrklang::ik_s32 read(void* buffer, irrklang::ik_u32 sizeToRead) = 0;
+	virtual bool seek(irrklang::ik_s32 finalPos, bool relativeMovement = false) = 0;
+	virtual irrklang::ik_s32 getSize() = 0;
+	virtual irrklang::ik_s32 getPos() = 0;
+	virtual const irrklang::ik_c8* getFileName() = 0;
+};
+
+template<typename T, int Id = 0>
+struct make_stream
+{
+	template<typename... Ts>
+	static irrklang::IAudioStream* exec(Ts&&... args)
+	{
+		static_assert(std::is_base_of<irrklangProxy::AudioStream<Id>, T>::value, "type parameter of this class must derive from irrklangProxy::AudioStream");
+		T* object = new T(std::forward<Ts>(args));
+		return irrklangProxy::IAudioStream::makeAudioStream(
+			object, 
+			[](void* user_data) -> void { delete static_cast<T*>(user_data);  },
+			[](void* user_data) -> irrklang::SAudioStreamFormat { return static_cast<T*>(user_data)->getFormat();  },
+			[](void* user_data, irrklang::ik_s32 pos) -> bool { return static_cast<T*>(user_data)->setPosition(pos);  },
+			[](void* user_data) -> bool { return static_cast<T*>(user_data)->getIsSeekingSupported(); },
+			[](void* user_data, void * target, irrklang::ik_s32 frameCountToRead) -> bool { return static_cast<T*>(user_data)->readFrames(target, frameCountToRead); }
+		);
+	}
+};
+
+template<typename T, int Id = 0>
+struct make_stream_loader
+{
+	template<typename... Ts>
+	static irrklang::IAudioStreamLoader* exec(Ts&&... args)
+	{
+		static_assert(std::is_base_of<irrklangProxy::AudioStreamLoader<Id>, T>::value, "type parameter of this class must derive from irrklangProxy::AudioStreamLoader");
+		T* object = new T(std::forward<Ts>(args));
+		return irrklangProxy::IAudioStreamLoader::makeAudioStreamLoader(
+			object, 
+			[](void* user_data) -> void { delete static_cast<T*>(user_data);  },
+			[](void* user_data, const irrklang::ik_c8* fileName) -> bool { return static_cast<T*>(user_data)->isALoadableFileExtension(fileName);  },
+			[](void* user_data, irrklang::IFileReader* file) -> irrklang::IAudioStream* { return static_cast<T*>(user_data)->createAudioStream(file);  }
+		);
+	}
+};
+
+template<typename T, int Id = 0>
+struct make_file_reader
+{
+	template<typename... Ts>
+	static irrklang::IFileReader* exec(Ts&&... args)
+	{
+		static_assert(std::is_base_of<irrklangProxy::FileReader<Id>, T>::value, "type parameter of this class must derive from irrklangProxy::FileReader");
+		T* object = new T(std::forward<Ts>(args));
+		return irrklangProxy::IFileReader::makeFileReader(
+			object, 
+			[](void* user_data) -> void { delete static_cast<T*>(user_data);  },
+			[](void* user_data, void* buffer, irrklang::ik_u32 sizeToRead) -> irrklang::ik_s32 { return static_cast<T*>(user_data)->read(buffer, sizeToRead);  },
+			[](void* user_data, irrklang::ik_s32 finalPos, bool relativeMovement) -> bool { return static_cast<T*>(user_data)->seek(finalPos, relativeMovement);  },
+			[](void* user_data) -> irrklang::ik_s32 { return static_cast<T*>(user_data)->getSize();  },
+			[](void* user_data) -> irrklang::ik_s32 { return static_cast<T*>(user_data)->getPos();  },
+			[](void* user_data) -> const irrklang::ik_c8* { return static_cast<T*>(user_data)->getFileName();  }
+		);
+	}
+};
+	
 }
