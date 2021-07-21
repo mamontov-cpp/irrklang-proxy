@@ -704,8 +704,8 @@ irrklang::ISound* irrklangProxy::ISoundEngine::play2DSoundSource(
 
 irrklang::ISound* irrklangProxy::ISoundEngine::play3DFileName(
 	irrklang::ISoundEngine* engine,
-	const char* soundFileName, 
-	irrklang::vec3df pos,
+	const char* soundFileName,
+	const irrklang::vec3df& pos,
 	bool playLooped , 
 	bool startPaused,
 	bool track,
@@ -719,8 +719,8 @@ irrklang::ISound* irrklangProxy::ISoundEngine::play3DFileName(
 
 irrklang::ISound* irrklangProxy::ISoundEngine::play3DSoundSource(
 	irrklang::ISoundEngine* engine,
-	irrklang::ISoundSource* source, 
-	irrklang::vec3df pos,
+	irrklang::ISoundSource* source,
+	const irrklang::vec3df& pos,
 	bool playLooped ,
 	bool startPaused,
 	bool track,
@@ -976,6 +976,210 @@ const char* irrklangProxy::IAudioRecorder::getAudioRecorderDriverName(irrklang::
 	return recorder->getDriverName();
 }
 
+
+void irrklangProxy::ISoundEffectControl::disableAllEffects(irrklang::ISoundEffectControl* control)
+{
+	control->disableAllEffects();
+}
+bool irrklangProxy::ISoundEffectControl::enableChorusSoundEffect(
+	irrklang::ISoundEffectControl* control,
+	irrklang::ik_f32 fWetDryMix,
+	irrklang::ik_f32 fDepth,
+	irrklang::ik_f32 fFeedback,
+	irrklang::ik_f32 fFrequency,
+	bool sinusWaveForm,
+	irrklang::ik_f32 fDelay,
+	irrklang::ik_s32 lPhase
+)
+{
+	return control->enableChorusSoundEffect(fWetDryMix, fDepth, fFeedback, fFrequency, sinusWaveForm, fDelay, lPhase);
+}
+
+void irrklangProxy::ISoundEffectControl::disableChorusSoundEffect(irrklang::ISoundEffectControl* control)
+{
+	control->disableChorusSoundEffect();
+}
+
+bool irrklangProxy::ISoundEffectControl::isChorusSoundEffectEnabled(irrklang::ISoundEffectControl* control)
+{
+	return control->isChorusSoundEffectEnabled();
+}
+
+bool irrklangProxy::ISoundEffectControl::enableCompressorSoundEffect(
+	irrklang::ISoundEffectControl* control,
+	irrklang::ik_f32 fGain,
+	irrklang::ik_f32 fAttack,
+	irrklang::ik_f32 fRelease,
+	irrklang::ik_f32 fThreshold,
+	irrklang::ik_f32 fRatio,
+	irrklang::ik_f32 fPredelay
+)
+{
+	return control->enableCompressorSoundEffect(fGain, fAttack, fRelease, fThreshold, fRatio, fPredelay);
+}
+
+void irrklangProxy::ISoundEffectControl::disableCompressorSoundEffect(irrklang::ISoundEffectControl* control)
+{
+	control->disableCompressorSoundEffect();
+}
+
+bool irrklangProxy::ISoundEffectControl::isCompressorSoundEffectEnabled(irrklang::ISoundEffectControl* control)
+{
+	return control->isCompressorSoundEffectEnabled();
+}
+
+bool irrklangProxy::ISoundEffectControl::enableDistortionSoundEffect(
+	irrklang::ISoundEffectControl* control,
+	irrklang::ik_f32 fGain,
+	irrklang::ik_f32 fEdge,
+	irrklang::ik_f32 fPostEQCenterFrequency,
+	irrklang::ik_f32 fPostEQBandwidth,
+	irrklang::ik_f32 fPreLowpassCutoff
+)
+{
+	return control->enableDistortionSoundEffect(fGain, fEdge, fPostEQCenterFrequency, fPostEQBandwidth, fPreLowpassCutoff);
+}
+
+void irrklangProxy::ISoundEffectControl::disableDistortionSoundEffect(irrklang::ISoundEffectControl* control)
+{
+	control->disableDistortionSoundEffect();
+}
+
+bool irrklangProxy::ISoundEffectControl::isDistortionSoundEffectEnabled(irrklang::ISoundEffectControl* control)
+{
+	return control->isDistortionSoundEffectEnabled();
+}
+
+bool irrklangProxy::ISoundEffectControl::enableEchoSoundEffect(
+	irrklang::ISoundEffectControl* control,
+	irrklang::ik_f32 fWetDryMix,
+	irrklang::ik_f32 fFeedback,
+	irrklang::ik_f32 fLeftDelay,
+	irrklang::ik_f32 fRightDelay,
+	irrklang::ik_s32 lPanDelay
+)
+{
+	return control->enableEchoSoundEffect(fWetDryMix, fFeedback, fLeftDelay, fRightDelay, lPanDelay);
+}
+
+void irrklangProxy::ISoundEffectControl::disableEchoSoundEffect(irrklang::ISoundEffectControl* control)
+{
+	control->disableEchoSoundEffect();
+}
+
+bool irrklangProxy::ISoundEffectControl::isEchoSoundEffectEnabled(irrklang::ISoundEffectControl* control)
+{
+	return control->isEchoSoundEffectEnabled();
+}
+
+bool irrklangProxy::ISoundEffectControl::enableFlangerSoundEffect(
+	irrklang::ISoundEffectControl* control,
+	irrklang::ik_f32 fWetDryMix,
+	irrklang::ik_f32 fDepth,
+	irrklang::ik_f32 fFeedback,
+	irrklang::ik_f32 fFrequency,
+	bool triangleWaveForm,
+	irrklang::ik_f32 fDelay,
+	irrklang::ik_s32 lPhase
+)
+{
+	return control->enableFlangerSoundEffect(fWetDryMix, fDepth, fFeedback, fFrequency, triangleWaveForm, fDelay, lPhase);
+}
+
+void irrklangProxy::ISoundEffectControl::disableFlangerSoundEffect(irrklang::ISoundEffectControl* control)
+{
+	control->disableFlangerSoundEffect();
+}
+
+bool irrklangProxy::ISoundEffectControl::isFlangerSoundEffectEnabled(irrklang::ISoundEffectControl* control)
+{
+	return control->isFlangerSoundEffectEnabled();
+}
+
+bool irrklangProxy::ISoundEffectControl::enableGargleSoundEffect(irrklang::ISoundEffectControl* control, irrklang::ik_s32 rateHz, bool sinusWaveForm)
+{
+	return control->enableGargleSoundEffect(rateHz, sinusWaveForm);
+}
+
+void irrklangProxy::ISoundEffectControl::disableGargleSoundEffect(irrklang::ISoundEffectControl* control)
+{
+	control->disableGargleSoundEffect();
+}
+
+bool irrklangProxy::ISoundEffectControl::isGargleSoundEffectEnabled(irrklang::ISoundEffectControl* control)
+{
+	return control->isGargleSoundEffectEnabled();
+}
+
+bool irrklangProxy::ISoundEffectControl::enableI3DL2ReverbSoundEffect(
+	irrklang::ISoundEffectControl* control,
+	irrklang::ik_s32 lRoom,
+	irrklang::ik_s32 lRoomHF,
+	irrklang::ik_f32 flRoomRolloffFactor,
+	irrklang::ik_f32 flDecayTime,
+	irrklang::ik_f32 flDecayHFRatio,
+	irrklang::ik_s32 lReflections,
+	irrklang::ik_f32 flReflectionsDelay,
+	irrklang::ik_s32 lReverb,
+	irrklang::ik_f32 flReverbDelay,
+	irrklang::ik_f32 flDiffusion,
+	irrklang::ik_f32 flDensity,
+	irrklang::ik_f32 flHFReference
+)
+{
+	return control->enableI3DL2ReverbSoundEffect(lRoom, lRoomHF, flRoomRolloffFactor, flDecayTime, flDecayHFRatio, lReflections, flReflectionsDelay, lReverb, flReverbDelay, flDiffusion, flDensity, flHFReference);
+}
+
+void  irrklangProxy::ISoundEffectControl::disableI3DL2ReverbSoundEffect(irrklang::ISoundEffectControl* control)
+{
+	control->disableI3DL2ReverbSoundEffect();
+}
+
+bool  irrklangProxy::ISoundEffectControl::isI3DL2ReverbSoundEffectEnabled(irrklang::ISoundEffectControl* control)
+{
+	return control->isI3DL2ReverbSoundEffectEnabled();
+}
+
+bool  irrklangProxy::ISoundEffectControl::enableParamEqSoundEffect(
+	irrklang::ISoundEffectControl* control,
+	irrklang::ik_f32 fCenter,
+	irrklang::ik_f32 fBandwidth,
+	irrklang::ik_f32 fGain
+)
+{
+	return control->enableParamEqSoundEffect(fCenter, fBandwidth, fGain);
+}
+
+void  irrklangProxy::ISoundEffectControl::disableParamEqSoundEffect(irrklang::ISoundEffectControl* control)
+{
+	control->disableParamEqSoundEffect();
+}
+
+bool  irrklangProxy::ISoundEffectControl::isParamEqSoundEffectEnabled(irrklang::ISoundEffectControl* control)
+{
+	return control->isParamEqSoundEffectEnabled();
+}
+
+bool  irrklangProxy::ISoundEffectControl::enableWavesReverbSoundEffect(
+	irrklang::ISoundEffectControl* control,
+	irrklang::ik_f32 fInGain,
+	irrklang::ik_f32 fReverbMix,
+	irrklang::ik_f32 fReverbTime,
+	irrklang::ik_f32 fHighFreqRTRatio
+)
+{
+	return control->enableWavesReverbSoundEffect(fInGain, fReverbMix, fReverbTime, fHighFreqRTRatio);
+}
+
+void  irrklangProxy::ISoundEffectControl::disableWavesReverbSoundEffect(irrklang::ISoundEffectControl* control)
+{
+	control->disableWavesReverbSoundEffect();
+}
+
+bool  irrklangProxy::ISoundEffectControl::isWavesReverbSoundEffectEnabled(irrklang::ISoundEffectControl* control)
+{
+	return control->isWavesReverbSoundEffectEnabled();
+}
 
 BOOL APIENTRY DllMain( HMODULE,
                        DWORD,

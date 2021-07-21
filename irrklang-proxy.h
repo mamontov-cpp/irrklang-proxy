@@ -247,7 +247,7 @@ IPAPI irrklang::ISound* KDECL play2DSoundSource(
 IPAPI irrklang::ISound* KDECL play3DFileName(
 	irrklang::ISoundEngine* engine,
 	const char* soundFileName,
-	irrklang::vec3df pos,
+	const irrklang::vec3df& pos,
 	bool playLooped = false,
 	bool startPaused = false,
 	bool track = false,
@@ -258,7 +258,7 @@ IPAPI irrklang::ISound* KDECL play3DFileName(
 IPAPI irrklang::ISound* KDECL play3DSoundSource(
 	irrklang::ISoundEngine* engine,
 	irrklang::ISoundSource* source,
-	irrklang::vec3df pos,
+	const irrklang::vec3df& pos,
 	bool playLooped = false,
 	bool startPaused = false,
 	bool track = false,
@@ -355,6 +355,107 @@ IPAPI bool KDECL isRecording(irrklang::IAudioRecorder* recorder);
 IPAPI irrklang::SAudioStreamFormat KDECL getAudioFormat(irrklang::IAudioRecorder* recorder);
 IPAPI void* KDECL getRecordedAudioData(irrklang::IAudioRecorder* recorder);
 IPAPI const char* KDECL getAudioRecorderDriverName(irrklang::IAudioRecorder* recorder);
+}
+
+namespace ISoundEffectControl
+{
+IPAPI void KDECL disableAllEffects(irrklang::ISoundEffectControl* control);
+IPAPI bool KDECL enableChorusSoundEffect(
+	irrklang::ISoundEffectControl* control,
+	irrklang::ik_f32 fWetDryMix = 50,
+	irrklang::ik_f32 fDepth = 10,
+	irrklang::ik_f32 fFeedback = 25,
+	irrklang::ik_f32 fFrequency = 1.1,
+	bool sinusWaveForm = true,
+	irrklang::ik_f32 fDelay = 16,
+	irrklang::ik_s32 lPhase = 90
+);
+
+IPAPI void KDECL disableChorusSoundEffect(irrklang::ISoundEffectControl* control);
+IPAPI bool KDECL isChorusSoundEffectEnabled(irrklang::ISoundEffectControl* control);
+IPAPI bool KDECL enableCompressorSoundEffect(
+	irrklang::ISoundEffectControl* control,
+	irrklang::ik_f32 fGain = 0,
+	irrklang::ik_f32 fAttack = 10,
+	irrklang::ik_f32 fRelease = 200,
+	irrklang::ik_f32 fThreshold = -20,
+	irrklang::ik_f32 fRatio = 3,
+	irrklang::ik_f32 fPredelay = 4
+);
+IPAPI void KDECL disableCompressorSoundEffect(irrklang::ISoundEffectControl* control);
+IPAPI bool KDECL isCompressorSoundEffectEnabled(irrklang::ISoundEffectControl* control);
+IPAPI bool KDECL enableDistortionSoundEffect(
+	irrklang::ISoundEffectControl* control,
+	irrklang::ik_f32 fGain = -18,
+	irrklang::ik_f32 fEdge = 15,
+	irrklang::ik_f32 fPostEQCenterFrequency = 2400,
+	irrklang::ik_f32 fPostEQBandwidth = 2400,
+	irrklang::ik_f32 fPreLowpassCutoff = 8000
+);
+
+IPAPI void KDECL disableDistortionSoundEffect(irrklang::ISoundEffectControl* control);
+IPAPI bool KDECL isDistortionSoundEffectEnabled(irrklang::ISoundEffectControl* control);
+IPAPI bool KDECL enableEchoSoundEffect(
+	irrklang::ISoundEffectControl* control,
+	irrklang::ik_f32 fWetDryMix = 50,
+	irrklang::ik_f32 fFeedback = 50,
+	irrklang::ik_f32 fLeftDelay = 500,
+	irrklang::ik_f32 fRightDelay = 500,
+	irrklang::ik_s32 lPanDelay = 0
+);
+
+IPAPI  void KDECL disableEchoSoundEffect(irrklang::ISoundEffectControl* control);
+IPAPI  bool KDECL isEchoSoundEffectEnabled(irrklang::ISoundEffectControl* control);
+IPAPI  bool KDECL enableFlangerSoundEffect(
+	irrklang::ISoundEffectControl* control,
+	irrklang::ik_f32 fWetDryMix = 50,
+	irrklang::ik_f32 fDepth = 100,
+	irrklang::ik_f32 fFeedback = -50,
+	irrklang::ik_f32 fFrequency = 0.25f,
+	bool triangleWaveForm = true,
+	irrklang::ik_f32 fDelay = 2,
+	irrklang::ik_s32 lPhase = 0
+);
+IPAPI void KDECL disableFlangerSoundEffect(irrklang::ISoundEffectControl* control);
+IPAPI bool KDECL isFlangerSoundEffectEnabled(irrklang::ISoundEffectControl* control);
+IPAPI bool KDECL enableGargleSoundEffect(irrklang::ISoundEffectControl* control, irrklang::ik_s32 rateHz = 20, bool sinusWaveForm = true);
+IPAPI void KDECL disableGargleSoundEffect(irrklang::ISoundEffectControl* control);
+IPAPI bool KDECL isGargleSoundEffectEnabled(irrklang::ISoundEffectControl* control);
+
+IPAPI bool KDECL enableI3DL2ReverbSoundEffect(
+	irrklang::ISoundEffectControl* control,
+	irrklang::ik_s32 lRoom = -1000,
+	irrklang::ik_s32 lRoomHF = -100,
+	irrklang::ik_f32 flRoomRolloffFactor = 0,
+	irrklang::ik_f32 flDecayTime = 1.49f,
+	irrklang::ik_f32 flDecayHFRatio = 0.83f,
+	irrklang::ik_s32 lReflections = -2602,
+	irrklang::ik_f32 flReflectionsDelay = 0.007f,
+	irrklang::ik_s32 lReverb = 200,
+	irrklang::ik_f32 flReverbDelay = 0.011f,
+	irrklang::ik_f32 flDiffusion = 100.0f,
+	irrklang::ik_f32 flDensity = 100.0f,
+	irrklang::ik_f32 flHFReference = 5000.0f
+);
+IPAPI void  KDECL disableI3DL2ReverbSoundEffect(irrklang::ISoundEffectControl* control);
+IPAPI bool  KDECL isI3DL2ReverbSoundEffectEnabled(irrklang::ISoundEffectControl* control);
+IPAPI bool  KDECL enableParamEqSoundEffect(
+	irrklang::ISoundEffectControl* control,
+	irrklang::ik_f32 fCenter = 8000,
+	irrklang::ik_f32 fBandwidth = 12,
+	irrklang::ik_f32 fGain = 0
+);
+IPAPI void  KDECL disableParamEqSoundEffect(irrklang::ISoundEffectControl* control);
+IPAPI bool  KDECL isParamEqSoundEffectEnabled(irrklang::ISoundEffectControl* control);
+IPAPI bool  KDECL enableWavesReverbSoundEffect(
+	irrklang::ISoundEffectControl* control,
+	irrklang::ik_f32 fInGain = 0,
+	irrklang::ik_f32 fReverbMix = 0,
+	irrklang::ik_f32 fReverbTime = 1000,
+	irrklang::ik_f32 fHighFreqRTRatio = 0.001f
+);
+IPAPI void  KDECL disableWavesReverbSoundEffect(irrklang::ISoundEffectControl* control);
+IPAPI bool  KDECL isWavesReverbSoundEffectEnabled(irrklang::ISoundEffectControl* control);
 }
 
 }
