@@ -48,6 +48,8 @@ IPAPI bool KDECL makeUTF8fromUTF16string(
 IPAPI void KDECL grabRefCounted(irrklang::IRefCounted* p);
 IPAPI void KDECL dropRefCounted(irrklang::IRefCounted* p);
 	
+IPAPI void KDECL grabVirtualRefCounted(irrklang::IVirtualRefCounted* p);
+IPAPI void KDECL dropVirtualRefCounted(irrklang::IVirtualRefCounted* p);
 
 namespace SAudioStreamFormat
 {
@@ -160,7 +162,53 @@ namespace IFileReader
 	IPAPI const irrklang::ik_c8* KDECL getFileName(irrklang::IFileReader* reader);
 }
 
-namespace SoundEngine
+namespace IFileFactory
+{
+	typedef irrklang::IFileReader* (*createFileReaderFn)(void* user_data, const irrklang::ik_c8* filename);
+
+	IPAPI void KDECL grabFileFactory(irrklang::IFileFactory* factory);
+	IPAPI void KDECL dropFileFactory(irrklang::IFileFactory* factory);
+	
+	IPAPI irrklang::IFileFactory* KDECL makeFileFactory(
+		void* user_data, 
+		irrklangProxy::dtorFn dtor, 
+		irrklangProxy::IFileFactory::createFileReaderFn createFileReaderVal
+	);
+
+	IPAPI irrklang::IFileReader* KDECL createFileReader(irrklang::IFileFactory* factory, const irrklang::ik_c8* filename);
+}
+
+namespace ISoundMixedOutputReceiver
+{
+	typedef void (*onAudioDataReadyFn)(void* user_data, const void* data, int byteCount, int playbackrate);
+	
+	IPAPI irrklang::ISoundMixedOutputReceiver* KDECL makeSoundMixedOutputReceiver(
+		void* user_data, 
+		irrklangProxy::dtorFn dtor, 
+		irrklangProxy::ISoundMixedOutputReceiver::onAudioDataReadyFn onAudioDataReadyVal
+	);
+
+	IPAPI void KDECL onAudioDataReady(irrklang::ISoundMixedOutputReceiver* receiver, const void* data, int byteCount, int playbackrate);
+}
+
+
+namespace ICapturedAudioDataReceiver
+{
+	typedef void (*onReceiveAudioDataStreamChunkFn)(void* user_data, unsigned char* audioData, unsigned long lengthInBytes);
+
+	IPAPI irrklang::ICapturedAudioDataReceiver* KDECL makeCapturedAudioDataReceiver(
+		void* user_data,
+		irrklangProxy::dtorFn dtor,
+		irrklangProxy::ICapturedAudioDataReceiver::onReceiveAudioDataStreamChunkFn onReceiveAudioDataStreamChunkVal
+	);
+
+	IPAPI void KDECL grabCapturedAudioDataReceiver(irrklang::ICapturedAudioDataReceiver* receiver);
+	IPAPI void KDECL dropCapturedAudioDataReceiver(irrklang::ICapturedAudioDataReceiver* receiver);
+	
+	IPAPI void KDECL onReceiveAudioDataStreamChunk(irrklang::ICapturedAudioDataReceiver* receiver, unsigned char* audioData, unsigned long lengthInBytes);
+}
+	
+namespace ISoundEngine
 {
 IPAPI const char* KDECL getDriverName(irrklang::ISoundEngine* engine);
 IPAPI irrklang::ISound* KDECL play2DFileName(
@@ -254,6 +302,8 @@ IPAPI void KDECL registerAudioStreamLoader(irrklang::ISoundEngine* engine, irrkl
 
 IPAPI bool KDECL isMultiThreaded(irrklang::ISoundEngine* engine);
 
+IPAPI void KDECL addFileFactory(irrklang::ISoundEngine* engine, irrklang::IFileFactory* fileFactory);
+
 IPAPI void KDECL setDefault3DSoundMinDistance(irrklang::ISoundEngine* engine, float minDistance);
 IPAPI float KDECL getDefault3DSoundMinDistance(irrklang::ISoundEngine* engine);
 
@@ -267,10 +317,10 @@ IPAPI bool KDECL loadPlugins(irrklang::ISoundEngine* engine, const char* path);
 
 IPAPI const irrklang::SInternalAudioInterface* KDECL getInternalAudioInterface(irrklang::ISoundEngine* engine);
 
-	
+IPAPI bool KDECL setMixedDataOutputReceiver(irrklang::ISoundEngine* engine, irrklang::ISoundMixedOutputReceiver* receiver);
 }
 
-namespace SoundDeviceList
+namespace ISoundDeviceList
 {
 IPAPI int KDECL getDeviceCount(irrklang::ISoundDeviceList* list);
 IPAPI const char* KDECL getDeviceID(irrklang::ISoundDeviceList* list, int index);
@@ -278,7 +328,19 @@ IPAPI const char* KDECL getDeviceDescription(irrklang::ISoundDeviceList* list, i
 	
 IPAPI void KDECL grabSoundDeviceList(irrklang::ISoundDeviceList* list);
 IPAPI void KDECL dropSoundDeviceList(irrklang::ISoundDeviceList* list);
+}
 
+namespace IAudioRecorder
+{
+IPAPI bool KDECL startRecordingBufferedAudio(irrklang::IAudioRecorder* recorder, irrklang::ik_s32 sampleRate = 22000, irrklang::ESampleFormat sampleFormat = irrklang::ESF_S16, irrklang::ik_s32 channelCount = 1);
+IPAPI bool KDECL startRecordingCustomHandledAudio(irrklang::IAudioRecorder* recorder, irrklang::ICapturedAudioDataReceiver* receiver, irrklang::ik_s32 sampleRate = 22000, irrklang::ESampleFormat sampleFormat = irrklang::ESF_S16, irrklang::ik_s32 channelCount = 1);
+IPAPI void KDECL stopRecordingAudio(irrklang::IAudioRecorder* recorder);
+IPAPI irrklang::ISoundSource* KDECL addSoundSourceFromRecordedAudio(irrklang::IAudioRecorder* recorder, const char* soundName);
+IPAPI void KDECL clearRecordedAudioDataBuffer(irrklang::IAudioRecorder* recorder);
+IPAPI bool KDECL isRecording(irrklang::IAudioRecorder* recorder);
+IPAPI irrklang::SAudioStreamFormat KDECL getAudioFormat(irrklang::IAudioRecorder* recorder);
+IPAPI void* KDECL getRecordedAudioData(irrklang::IAudioRecorder* recorder);
+IPAPI const char* KDECL getDriverName(irrklang::IAudioRecorder* recorder);
 }
 
 }
@@ -320,6 +382,30 @@ public:
 	virtual irrklang::ik_s32 getSize() = 0;
 	virtual irrklang::ik_s32 getPos() = 0;
 	virtual const irrklang::ik_c8* getFileName() = 0;
+};
+
+template<int Id = 0>
+class FileFactory  // NOLINT(cppcoreguidelines-special-member-functions)
+{
+public: 
+	virtual ~FileFactory() {}
+	virtual irrklang::IFileReader* createFileReader(const irrklang::ik_c8* filename) = 0;
+};
+
+template<int Id = 0>
+class SoundMixedOutputReceiver  // NOLINT(cppcoreguidelines-special-member-functions)
+{
+public: 
+	virtual ~SoundMixedOutputReceiver() {}
+	virtual void OnAudioDataReady(const void* data, int byteCount, int playbackrate) = 0;
+};
+
+template<int Id = 0>
+class CapturedAudioDataReceiver  // NOLINT(cppcoreguidelines-special-member-functions)
+{
+public: 
+	virtual ~CapturedAudioDataReceiver() {}
+	virtual void OnReceiveAudioDataStreamChunk(unsigned char* audioData, unsigned long lengthInBytes) = 0;
 };
 
 template<typename T, int Id = 0>
@@ -377,5 +463,53 @@ struct make_file_reader
 		);
 	}
 };
-	
+
+template<typename T, int Id = 0>
+struct make_file_factory
+{
+	template<typename... Ts>
+	static irrklang::IFileFactory* exec(Ts&&... args)
+	{
+		static_assert(std::is_base_of<irrklangProxy::FileFactory<Id>, T>::value, "type parameter of this class must derive from irrklangProxy::FileFactory");
+		T* object = new T(std::forward<Ts>(args));
+		return irrklangProxy::IFileFactory::makeFileFactory(
+			object, 
+			[](void* user_data) -> void { delete static_cast<T*>(user_data);  },
+			[](void* user_data, const irrklang::ik_c8* filename) -> irrklang::IFileReader* { return static_cast<T*>(user_data)->createFileReader(filename);  }
+		);
+	}
+};
+
+template<typename T, int Id = 0>
+struct make_sound_mixed_output_receiver
+{
+	template<typename... Ts>
+	static irrklang::ISoundMixedOutputReceiver* exec(Ts&&... args)
+	{
+		static_assert(std::is_base_of<irrklangProxy::SoundMixedOutputReceiver<Id>, T>::value, "type parameter of this class must derive from irrklangProxy::SoundMixedOutputReceiver");
+		T* object = new T(std::forward<Ts>(args));
+		return irrklangProxy::ISoundMixedOutputReceiver::makeSoundMixedOutputReceiver(
+			object, 
+			[](void* user_data) -> void { delete static_cast<T*>(user_data);  },
+			[](void* user_data, const void* data, int byteCount, int playbackrate) -> void { static_cast<T*>(user_data)->OnAudioDataReady(data, byteCount, playbackrate);  }
+		);
+	}
+};
+
+
+template<typename T, int Id = 0>
+struct make_captured_audio_data_receiver
+{
+	template<typename... Ts>
+	static irrklang::ICapturedAudioDataReceiver* exec(Ts&&... args)
+	{
+		static_assert(std::is_base_of<irrklangProxy::CapturedAudioDataReceiver<Id>, T>::value, "type parameter of this class must derive from irrklangProxy::CapturedAudioDataReceiver");
+		T* object = new T(std::forward<Ts>(args));
+		return irrklangProxy::ICapturedAudioDataReceiver::makeCapturedAudioDataReceiver(
+			object, 
+			[](void* user_data) -> void { delete static_cast<T*>(user_data);  },
+			[](void* user_data, unsigned char* audioData, unsigned long lengthInBytes) -> void { static_cast<T*>(user_data)->OnReceiveAudioDataStreamChunk(audioData,  lengthInBytes);  }
+		);
+	}
+};
 }
