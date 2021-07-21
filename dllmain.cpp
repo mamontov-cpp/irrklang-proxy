@@ -1181,6 +1181,98 @@ bool  irrklangProxy::ISoundEffectControl::isWavesReverbSoundEffectEnabled(irrkla
 	return control->isWavesReverbSoundEffectEnabled();
 }
 
+void irrklangProxy::ISoundSource::grabSoundSource(irrklang::ISoundSource* source)
+{
+	source->grab();
+}
+
+void irrklangProxy::ISoundSource::dropSoundSource(irrklang::ISoundSource* source)
+{
+	source->drop();
+}
+
+
+const irrklang::ik_c8* irrklangProxy::ISoundSource::getNameForSoundSource(irrklang::ISoundSource* source)
+{
+	return source->getName();
+}
+
+void irrklangProxy::ISoundSource::setStreamMode(irrklang::ISoundSource* source, irrklang::E_STREAM_MODE mode)
+{
+	source->setStreamMode(mode);
+}
+
+irrklang::E_STREAM_MODE irrklangProxy::ISoundSource::getStreamMode(irrklang::ISoundSource* source)
+{
+	return source->getStreamMode();
+}
+
+irrklang::ik_u32 irrklangProxy::ISoundSource::getPlayLength(irrklang::ISoundSource* source)
+{
+	return source->getPlayLength();
+}
+
+irrklang::SAudioStreamFormat irrklangProxy::ISoundSource::getAudioFormatForSoundSource(irrklang::ISoundSource* source)
+{
+	return source->getAudioFormat();
+}
+
+bool irrklangProxy::ISoundSource::getIsSeekingSupportedForSoundSource(irrklang::ISoundSource* source)
+{
+	return source->getIsSeekingSupported();
+}
+
+void irrklangProxy::ISoundSource::setDefaultVolume(irrklang::ISoundSource* source, irrklang::ik_f32 volume)
+{
+	source->setDefaultVolume(volume);
+}
+
+irrklang::ik_f32  irrklangProxy::ISoundSource::getDefaultVolume(irrklang::ISoundSource* source)
+{
+	return source->getDefaultVolume();
+}
+
+void irrklangProxy::ISoundSource::setDefaultMinDistance(irrklang::ISoundSource* source, irrklang::ik_f32 minDistance)
+{
+	source->setDefaultMinDistance(minDistance);
+}
+
+irrklang::ik_f32 irrklangProxy::ISoundSource::getDefaultMinDistance(irrklang::ISoundSource* source)
+{
+	return source->getDefaultMinDistance();
+}
+
+void irrklangProxy::ISoundSource::setDefaultMaxDistance(irrklang::ISoundSource* source, irrklang::ik_f32 maxDistance)
+{
+	source->setDefaultMaxDistance(maxDistance);
+}
+
+irrklang::ik_f32 irrklangProxy::ISoundSource::getDefaultMaxDistance(irrklang::ISoundSource* source)
+{
+	return source->getDefaultMaxDistance();
+}
+
+void irrklangProxy::ISoundSource::forceReloadAtNextUse(irrklang::ISoundSource* source)
+{
+	source->forceReloadAtNextUse();
+}
+
+void irrklangProxy::ISoundSource::setForcedStreamingThreshold(irrklang::ISoundSource* source, irrklang::ik_s32 thresholdBytes)
+{
+	source->setForcedStreamingThreshold(thresholdBytes);
+}
+
+irrklang::ik_s32 irrklangProxy::ISoundSource::getForcedStreamingThreshold(irrklang::ISoundSource* source)
+{
+	return source->getForcedStreamingThreshold();
+}
+
+void* irrklangProxy::ISoundSource::getSampleData(irrklang::ISoundSource* source)
+{
+	return source->getSampleData();
+}
+
+#ifdef _MSC_VER
 BOOL APIENTRY DllMain( HMODULE,
                        DWORD,
                        LPVOID
@@ -1188,4 +1280,4 @@ BOOL APIENTRY DllMain( HMODULE,
 {
     return TRUE;
 }
-
+#endif

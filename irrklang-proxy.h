@@ -3,16 +3,20 @@
 #include <irrKlang.h>
 #include <functional>
 
-#ifdef IRRKLANGPROXY_EXPORTS
-	// ReSharper disable once IdentifierTypo
-	#define IPAPI __declspec(dllexport)  // NOLINT(cppcoreguidelines-macro-usage)
+#ifndef USE_STATIC 
+	#ifdef IRRKLANGPROXY_EXPORTS
+		// ReSharper disable once IdentifierTypo
+		#define IPAPI __declspec(dllexport)  // NOLINT(cppcoreguidelines-macro-usage)
+	#else
+		// ReSharper disable once IdentifierTypo
+		#define IPAPI __declspec(dllimport)  // NOLINT(cppcoreguidelines-macro-usage)
+	#endif
 #else
-	// ReSharper disable once IdentifierTypo
-	#define IPAPI __declspec(dllimport)  // NOLINT(cppcoreguidelines-macro-usage)
+	#define IPAPI
 #endif
+
 // ReSharper disable once IdentifierTypo
 #define KDECL __cdecl // NOLINT(cppcoreguidelines-macro-usage)
-
 extern "C"
 {
 namespace irrklangProxy
@@ -365,7 +369,7 @@ IPAPI bool KDECL enableChorusSoundEffect(
 	irrklang::ik_f32 fWetDryMix = 50,
 	irrklang::ik_f32 fDepth = 10,
 	irrklang::ik_f32 fFeedback = 25,
-	irrklang::ik_f32 fFrequency = 1.1,
+	irrklang::ik_f32 fFrequency = 1.1f,
 	bool sinusWaveForm = true,
 	irrklang::ik_f32 fDelay = 16,
 	irrklang::ik_s32 lPhase = 90
@@ -456,6 +460,32 @@ IPAPI bool  KDECL enableWavesReverbSoundEffect(
 );
 IPAPI void  KDECL disableWavesReverbSoundEffect(irrklang::ISoundEffectControl* control);
 IPAPI bool  KDECL isWavesReverbSoundEffectEnabled(irrklang::ISoundEffectControl* control);
+}
+
+namespace ISoundSource
+{
+IPAPI void KDECL grabSoundSource(irrklang::ISoundSource* source);
+IPAPI void KDECL dropSoundSource(irrklang::ISoundSource* source);
+
+
+IPAPI const irrklang::ik_c8* KDECL  getNameForSoundSource(irrklang::ISoundSource* source);
+IPAPI void KDECL  setStreamMode(irrklang::ISoundSource* source, irrklang::E_STREAM_MODE mode);
+IPAPI irrklang::E_STREAM_MODE KDECL  getStreamMode(irrklang::ISoundSource* source);
+
+IPAPI irrklang::ik_u32 KDECL  getPlayLength(irrklang::ISoundSource* source);
+
+IPAPI irrklang::SAudioStreamFormat KDECL  getAudioFormatForSoundSource(irrklang::ISoundSource* source);
+IPAPI bool KDECL  getIsSeekingSupportedForSoundSource(irrklang::ISoundSource* source);
+IPAPI void KDECL  setDefaultVolume(irrklang::ISoundSource* source, irrklang::ik_f32 volume = 1.0f);
+IPAPI irrklang::ik_f32  KDECL getDefaultVolume(irrklang::ISoundSource* source);
+IPAPI void KDECL  setDefaultMinDistance(irrklang::ISoundSource* source, irrklang::ik_f32 minDistance);
+IPAPI irrklang::ik_f32 KDECL  getDefaultMinDistance(irrklang::ISoundSource* source);
+IPAPI void KDECL  setDefaultMaxDistance(irrklang::ISoundSource* source, irrklang::ik_f32 maxDistance);
+IPAPI irrklang::ik_f32 KDECL getDefaultMaxDistance(irrklang::ISoundSource* source);
+IPAPI void KDECL  forceReloadAtNextUse(irrklang::ISoundSource* source);
+IPAPI void KDECL setForcedStreamingThreshold(irrklang::ISoundSource* source, irrklang::ik_s32 thresholdBytes);
+IPAPI irrklang::ik_s32 KDECL getForcedStreamingThreshold(irrklang::ISoundSource* source);
+IPAPI void* KDECL getSampleData(irrklang::ISoundSource* source);
 }
 
 }
