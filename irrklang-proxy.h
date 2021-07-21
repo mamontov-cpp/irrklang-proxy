@@ -354,7 +354,7 @@ IPAPI void KDECL clearRecordedAudioDataBuffer(irrklang::IAudioRecorder* recorder
 IPAPI bool KDECL isRecording(irrklang::IAudioRecorder* recorder);
 IPAPI irrklang::SAudioStreamFormat KDECL getAudioFormat(irrklang::IAudioRecorder* recorder);
 IPAPI void* KDECL getRecordedAudioData(irrklang::IAudioRecorder* recorder);
-IPAPI const char* KDECL getDriverName(irrklang::IAudioRecorder* recorder);
+IPAPI const char* KDECL getAudioRecorderDriverName(irrklang::IAudioRecorder* recorder);
 }
 
 }

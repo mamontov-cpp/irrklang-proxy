@@ -971,7 +971,7 @@ void* irrklangProxy::IAudioRecorder::getRecordedAudioData(irrklang::IAudioRecord
 	return recorder->getRecordedAudioData();
 }
 
-const char* irrklangProxy::IAudioRecorder::getDriverName(irrklang::IAudioRecorder* recorder)
+const char* irrklangProxy::IAudioRecorder::getAudioRecorderDriverName(irrklang::IAudioRecorder* recorder)
 {
 	return recorder->getDriverName();
 }
