@@ -207,6 +207,20 @@ namespace ICapturedAudioDataReceiver
 	
 	IPAPI void KDECL onReceiveAudioDataStreamChunk(irrklang::ICapturedAudioDataReceiver* receiver, unsigned char* audioData, unsigned long lengthInBytes);
 }
+
+namespace ISoundStopEventReceiver
+{
+	typedef void(*onSoundStoppedFn)(void* user_data, irrklang::ISound* sound, irrklang::E_STOP_EVENT_CAUSE reason, void* receiverUserData);
+
+	
+	IPAPI irrklang::ISoundStopEventReceiver* KDECL makeSoundStopEventReceiver(
+		void* user_data,
+		irrklangProxy::dtorFn dtor,
+		irrklangProxy::ISoundStopEventReceiver::onSoundStoppedFn onSoundStoppedVal
+	);
+
+	void onSoundStopped(irrklang::ISoundStopEventReceiver* receiver, irrklang::ISound* sound, irrklang::E_STOP_EVENT_CAUSE reason, void* userData);
+}
 	
 namespace ISoundEngine
 {
@@ -408,6 +422,14 @@ public:
 	virtual void OnReceiveAudioDataStreamChunk(unsigned char* audioData, unsigned long lengthInBytes) = 0;
 };
 
+template<int Id = 0>
+class SoundStopEventReceiver  // NOLINT(cppcoreguidelines-special-member-functions)
+{
+public: 
+	virtual ~SoundStopEventReceiver() {}
+	virtual void OnSoundStopped(irrklang::ISound* sound, irrklang::E_STOP_EVENT_CAUSE reason, void* userData) = 0;
+};
+
 template<typename T, int Id = 0>
 struct make_stream
 {
@@ -512,4 +534,21 @@ struct make_captured_audio_data_receiver
 		);
 	}
 };
+
+template<typename T, int Id = 0>
+struct make_sound_stop_event_receiver
+{
+	template<typename... Ts>
+	static irrklang::ISoundStopEventReceiver* exec(Ts&&... args)
+	{
+		static_assert(std::is_base_of<irrklangProxy::SoundStopEventReceiver<Id>, T>::value, "type parameter of this class must derive from irrklangProxy::SoundStopEventReceiver");
+		T* object = new T(std::forward<Ts>(args));
+		return irrklangProxy::ISoundStopEventReceiver::makeSoundStopEventReceiver(
+			object, 
+			[](void* user_data) -> void { delete static_cast<T*>(user_data);  },
+			[](void* user_data, irrklang::ISound* sound, irrklang::E_STOP_EVENT_CAUSE reason, void* userData) -> void { static_cast<T*>(user_data)->OnSoundStopped(sound,  reason, userData);  }
+		);
+	}
+};
+	
 }

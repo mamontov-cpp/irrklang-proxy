@@ -566,8 +566,6 @@ void irrklangProxy::ISoundMixedOutputReceiver::onAudioDataReady(irrklang::ISound
 	receiver->OnAudioDataReady(data, byteCount, playbackrate);
 }
 
-
-
 namespace irrklangProxy
 {
 
@@ -624,6 +622,54 @@ void irrklangProxy::ICapturedAudioDataReceiver::dropCapturedAudioDataReceiver(ir
 void irrklangProxy::ICapturedAudioDataReceiver::onReceiveAudioDataStreamChunk(irrklang::ICapturedAudioDataReceiver* receiver, unsigned char* audioData, unsigned long lengthInBytes)
 {
 	receiver->OnReceiveAudioDataStreamChunk(audioData, lengthInBytes);
+}
+
+namespace irrklangProxy
+{
+
+class ISoundStopEventReceiverWrapper: public irrklang::ISoundStopEventReceiver  // NOLINT(cppcoreguidelines-special-member-functions)
+{
+public:
+	ISoundStopEventReceiverWrapper(
+		void* user_data,
+		irrklangProxy::dtorFn dtor,
+		irrklangProxy::ISoundStopEventReceiver::onSoundStoppedFn onSoundStoppedVal
+	) : m_user_data(user_data),
+	m_dtor(dtor),
+	m_on_sound_stopped_fn(onSoundStoppedVal)
+	{
+	}
+
+	virtual ~ISoundStopEventReceiverWrapper() override
+	{
+		m_dtor(m_user_data);
+	}
+
+	virtual void OnSoundStopped(irrklang::ISound* sound, irrklang::E_STOP_EVENT_CAUSE reason, void* userData) override
+	{
+		m_on_sound_stopped_fn(m_user_data, sound, reason, userData);
+	}
+	
+private:
+	void* m_user_data;
+	irrklangProxy::dtorFn m_dtor;
+	irrklangProxy::ISoundStopEventReceiver::onSoundStoppedFn m_on_sound_stopped_fn;
+};
+
+}
+
+irrklang::ISoundStopEventReceiver* irrklangProxy::ISoundStopEventReceiver::makeSoundStopEventReceiver(
+	void* user_data,
+	irrklangProxy::dtorFn dtor,
+	irrklangProxy::ISoundStopEventReceiver::onSoundStoppedFn onSoundStoppedVal
+)
+{
+	return new irrklangProxy::ISoundStopEventReceiverWrapper(user_data, dtor, onSoundStoppedVal);
+}
+
+void irrklangProxy::ISoundStopEventReceiver::onSoundStopped(irrklang::ISoundStopEventReceiver* receiver, irrklang::ISound* sound, irrklang::E_STOP_EVENT_CAUSE reason, void* userData)
+{
+	receiver->OnSoundStopped(sound, reason, userData);
 }
 
 const char* irrklangProxy::ISoundEngine::getDriverName(irrklang::ISoundEngine* engine)
