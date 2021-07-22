@@ -1,4 +1,4 @@
-﻿#include "irrklang-proxy.h"
+﻿#include "../include/irrklang-proxy.h"
 #define WIN32_LEAN_AND_MEAN
 #ifdef _WIN32
 #include <Windows.h>
@@ -961,7 +961,7 @@ bool irrklangProxy::IAudioRecorder::isRecording(irrklang::IAudioRecorder* record
 	return recorder->isRecording();
 }
 
-irrklang::SAudioStreamFormat irrklangProxy::IAudioRecorder::getAudioFormat(irrklang::IAudioRecorder* recorder)
+irrklang::SAudioStreamFormat irrklangProxy::IAudioRecorder::getAudioFormatForAudioRecorder(irrklang::IAudioRecorder* recorder)
 {
 	return recorder->getAudioFormat();
 }
@@ -1207,7 +1207,7 @@ irrklang::E_STREAM_MODE irrklangProxy::ISoundSource::getStreamMode(irrklang::ISo
 	return source->getStreamMode();
 }
 
-irrklang::ik_u32 irrklangProxy::ISoundSource::getPlayLength(irrklang::ISoundSource* source)
+irrklang::ik_u32 irrklangProxy::ISoundSource::getSoundSourcePlayLength(irrklang::ISoundSource* source)
 {
 	return source->getPlayLength();
 }
@@ -1270,6 +1270,146 @@ irrklang::ik_s32 irrklangProxy::ISoundSource::getForcedStreamingThreshold(irrkla
 void* irrklangProxy::ISoundSource::getSampleData(irrklang::ISoundSource* source)
 {
 	return source->getSampleData();
+}
+
+void irrklangProxy::ISound::grabSound(irrklang::ISound* sound)
+{
+	sound->grab();
+}
+
+void irrklangProxy::ISound::dropSound(irrklang::ISound* sound)
+{
+	sound->drop();
+}
+
+irrklang::ISoundSource* irrklangProxy::ISound::getSoundSource(irrklang::ISound* sound)
+{
+	return sound->getSoundSource();
+}
+
+void irrklangProxy::ISound::setIsPaused(irrklang::ISound* sound, bool paused)
+{
+	return sound->setIsPaused(paused);
+}
+
+bool irrklangProxy::ISound::getIsPaused(irrklang::ISound* sound)
+{
+	return sound->getIsPaused();
+}
+
+void irrklangProxy::ISound::stop(irrklang::ISound* sound)
+{
+	sound->stop();
+}
+
+irrklang::ik_f32 irrklangProxy::ISound::getCurrentSoundVolume(irrklang::ISound* sound)
+{
+	return sound->getVolume();
+}
+
+void irrklangProxy::ISound::setCurrentSoundVolume(irrklang::ISound* sound, irrklang::ik_f32 volume)
+{
+	sound->setVolume(volume);
+}
+
+void irrklangProxy::ISound::setPan(irrklang::ISound* sound, irrklang::ik_f32 pan)
+{
+	sound->setPan(pan);
+}
+
+irrklang::ik_f32 irrklangProxy::ISound::getPan(irrklang::ISound* sound)
+{
+	return sound->getPan();
+}
+
+bool irrklangProxy::ISound::isSoundLooped(irrklang::ISound* sound)
+{
+	return sound->isLooped();
+}
+
+void irrklangProxy::ISound::setSoundIsLooped(irrklang::ISound* sound, bool looped)
+{
+	sound->setIsLooped(looped);
+}
+
+bool irrklangProxy::ISound::isSoundFinished(irrklang::ISound* sound)
+{
+	return sound->isFinished();
+}
+
+void irrklangProxy::ISound::setSoundMinDistance(irrklang::ISound* sound, irrklang::ik_f32 min)
+{
+	sound->setMinDistance(min);
+}
+
+irrklang::ik_f32 irrklangProxy::ISound::getSoundMinDistance(irrklang::ISound* sound)
+{
+	return sound->getMinDistance();
+}
+
+void irrklangProxy::ISound::setSoundMaxDistance(irrklang::ISound* sound, irrklang::ik_f32 max)
+{
+	sound->setMaxDistance(max);
+}
+
+irrklang::ik_f32 irrklangProxy::ISound::getSoundMaxDistance(irrklang::ISound* sound)
+{
+	return sound->getMaxDistance();
+}
+
+void irrklangProxy::ISound::setSoundPosition(irrklang::ISound* sound, const irrklang::vec3df& position)
+{
+	sound->setPosition(position);
+}
+
+void irrklangProxy::ISound::getSoundPosition(irrklang::ISound* sound, irrklang::vec3df& result)
+{
+	result = sound->getPosition();
+}
+
+void irrklangProxy::ISound::setSoundVelocity(irrklang::ISound* sound, const irrklang::vec3df& vel)
+{
+	sound->setVelocity(vel);
+}
+
+void irrklangProxy::ISound::getSoundVelocity(irrklang::ISound* sound, irrklang::vec3df& result)
+{
+	result = sound->getVelocity();
+}
+
+irrklang::ik_u32 irrklangProxy::ISound::getPlayPosition(irrklang::ISound* sound)
+{
+	return sound->getPlayPosition();
+}
+
+bool irrklangProxy::ISound::setPlayPosition(irrklang::ISound* sound, irrklang::ik_u32 pos)
+{
+	return sound->setPlayPosition(pos);
+}
+
+bool irrklangProxy::ISound::setPlaybackSpeed(irrklang::ISound* sound, irrklang::ik_f32 speed)
+{
+	return sound->setPlaybackSpeed(speed);
+}
+
+irrklang::ik_f32 irrklangProxy::ISound::getPlaybackSpeed(irrklang::ISound* sound)
+{
+	return sound->getPlaybackSpeed();
+}
+
+irrklang::ik_u32 irrklangProxy::ISound::getSoundPlayLength(irrklang::ISound* sound)
+{
+	return sound->getPlayLength();
+}
+
+irrklang::ISoundEffectControl* irrklangProxy::ISound::getSoundEffectControl(irrklang::ISound* sound)
+{
+	return sound->getSoundEffectControl();
+}
+
+void irrklangProxy::ISound::setSoundStopEventReceiver(irrklang::ISound* sound, irrklang::ISoundStopEventReceiver* receiver, void* userData)
+{
+	sound->setSoundStopEventReceiver(receiver, userData);
 }
 
 #ifdef _MSC_VER

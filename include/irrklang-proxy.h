@@ -356,7 +356,7 @@ IPAPI void KDECL stopRecordingAudio(irrklang::IAudioRecorder* recorder);
 IPAPI irrklang::ISoundSource* KDECL addSoundSourceFromRecordedAudio(irrklang::IAudioRecorder* recorder, const char* soundName);
 IPAPI void KDECL clearRecordedAudioDataBuffer(irrklang::IAudioRecorder* recorder);
 IPAPI bool KDECL isRecording(irrklang::IAudioRecorder* recorder);
-IPAPI irrklang::SAudioStreamFormat KDECL getAudioFormat(irrklang::IAudioRecorder* recorder);
+IPAPI irrklang::SAudioStreamFormat KDECL getAudioFormatForAudioRecorder(irrklang::IAudioRecorder* recorder);
 IPAPI void* KDECL getRecordedAudioData(irrklang::IAudioRecorder* recorder);
 IPAPI const char* KDECL getAudioRecorderDriverName(irrklang::IAudioRecorder* recorder);
 }
@@ -472,7 +472,7 @@ IPAPI const irrklang::ik_c8* KDECL  getNameForSoundSource(irrklang::ISoundSource
 IPAPI void KDECL  setStreamMode(irrklang::ISoundSource* source, irrklang::E_STREAM_MODE mode);
 IPAPI irrklang::E_STREAM_MODE KDECL  getStreamMode(irrklang::ISoundSource* source);
 
-IPAPI irrklang::ik_u32 KDECL  getPlayLength(irrklang::ISoundSource* source);
+IPAPI irrklang::ik_u32 KDECL  getSoundSourcePlayLength(irrklang::ISoundSource* source);
 
 IPAPI irrklang::SAudioStreamFormat KDECL  getAudioFormatForSoundSource(irrklang::ISoundSource* source);
 IPAPI bool KDECL  getIsSeekingSupportedForSoundSource(irrklang::ISoundSource* source);
@@ -486,6 +486,39 @@ IPAPI void KDECL  forceReloadAtNextUse(irrklang::ISoundSource* source);
 IPAPI void KDECL setForcedStreamingThreshold(irrklang::ISoundSource* source, irrklang::ik_s32 thresholdBytes);
 IPAPI irrklang::ik_s32 KDECL getForcedStreamingThreshold(irrklang::ISoundSource* source);
 IPAPI void* KDECL getSampleData(irrklang::ISoundSource* source);
+}
+
+namespace ISound
+{
+IPAPI void KDECL  grabSound(irrklang::ISound* sound);
+IPAPI void KDECL  dropSound(irrklang::ISound* sound);
+
+IPAPI irrklang::ISoundSource* KDECL  getSoundSource(irrklang::ISound* sound);
+IPAPI void KDECL  setIsPaused(irrklang::ISound* sound, bool paused = true);
+IPAPI bool KDECL  getIsPaused(irrklang::ISound* sound);
+IPAPI void KDECL  stop(irrklang::ISound* sound);
+IPAPI irrklang::ik_f32 KDECL  getCurrentSoundVolume(irrklang::ISound* sound);
+IPAPI void KDECL  setCurrentSoundVolume(irrklang::ISound* sound, irrklang::ik_f32 volume);
+IPAPI void KDECL  setPan(irrklang::ISound* sound, irrklang::ik_f32 pan);
+IPAPI irrklang::ik_f32 KDECL  getPan(irrklang::ISound* sound);
+IPAPI bool KDECL  isSoundLooped(irrklang::ISound* sound);
+IPAPI void KDECL  setSoundIsLooped(irrklang::ISound* sound, bool looped);
+IPAPI bool KDECL  isSoundFinished(irrklang::ISound* sound);
+IPAPI void KDECL  setSoundMinDistance(irrklang::ISound* sound, irrklang::ik_f32 min);
+IPAPI irrklang::ik_f32 KDECL  getSoundMinDistance(irrklang::ISound* sound);
+IPAPI void KDECL  setSoundMaxDistance(irrklang::ISound* sound, irrklang::ik_f32 max);
+IPAPI irrklang::ik_f32 KDECL  getSoundMaxDistance(irrklang::ISound* sound);
+IPAPI void KDECL  setSoundPosition(irrklang::ISound* sound, const irrklang::vec3df& position);
+IPAPI void KDECL  getSoundPosition(irrklang::ISound* sound, irrklang::vec3df& result);
+IPAPI void KDECL  setSoundVelocity(irrklang::ISound* sound, const irrklang::vec3df& vel);
+IPAPI void KDECL  getSoundVelocity(irrklang::ISound* sound, irrklang::vec3df& result);
+IPAPI irrklang::ik_u32 KDECL  getPlayPosition(irrklang::ISound* sound);
+IPAPI bool KDECL  setPlayPosition(irrklang::ISound* sound, irrklang::ik_u32 pos);
+IPAPI bool KDECL  setPlaybackSpeed(irrklang::ISound* sound, irrklang::ik_f32 speed = 1.0f);
+IPAPI irrklang::ik_f32 KDECL  getPlaybackSpeed(irrklang::ISound* sound);
+IPAPI irrklang::ik_u32 KDECL  getSoundPlayLength(irrklang::ISound* sound);
+IPAPI irrklang::ISoundEffectControl* KDECL  getSoundEffectControl(irrklang::ISound* sound);
+IPAPI void KDECL  setSoundStopEventReceiver(irrklang::ISound* sound, irrklang::ISoundStopEventReceiver* receiver, void* userData = nullptr);
 }
 
 }
