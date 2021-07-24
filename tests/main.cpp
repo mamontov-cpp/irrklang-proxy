@@ -30,6 +30,11 @@ int getch(void)
 
 #endif
 
+
+#ifdef _MSC_VER
+	#define getch _getch
+#endif
+
 using namespace irrklang;
 
 
@@ -48,7 +53,7 @@ int main(int argc, const char** argv)
 	// tells the engine to play it looped.
 
 	// play some sound stream, looped
-	irrklangProxy::ISoundEngine::play2DFileName(engine, "../getout.ogg", true, false, false, irrklang::ESM_AUTO_DETECT,false);
+	irrklangProxy::ISoundEngine::play2DFileName(engine, "../../getout.ogg", true, false, false, irrklang::ESM_AUTO_DETECT,false);
 
 	// In a loop, wait until user presses 'q' to exit or another key to
 	// play another sound.
@@ -60,7 +65,7 @@ int main(int argc, const char** argv)
 		printf("Press any key to play some sound, press 'q' to quit.\n");
 
 		// play a single sound
-		irrklangProxy::ISoundEngine::play2DFileName(engine, "../bell.wav", false, false, false, irrklang::ESM_AUTO_DETECT,false);
+		irrklangProxy::ISoundEngine::play2DFileName(engine, "../../bell.wav", false, false, false, irrklang::ESM_AUTO_DETECT,false);
 	}
 	while(getch() != 'q');
 
