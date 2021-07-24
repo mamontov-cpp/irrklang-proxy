@@ -3,7 +3,15 @@
 #include <irrKlang.h>
 #include <functional>
 
-#ifndef USE_STATIC 
+// Don't use static versions only 
+#ifndef _MSC_VER
+	#ifndef __MINGW64__
+		#define IRRKLANG_PROXY_USE_STATIC 1
+	#endif
+#endif 
+
+
+#ifndef IRRKLANG_PROXY_USE_STATIC
 	#ifdef IRRKLANGPROXY_EXPORTS
 		// ReSharper disable once IdentifierTypo
 		#define IPAPI __declspec(dllexport)  // NOLINT(cppcoreguidelines-macro-usage)
@@ -601,7 +609,7 @@ struct make_stream
 	static irrklang::IAudioStream* exec(Ts&&... args)
 	{
 		static_assert(std::is_base_of<irrklangProxy::AudioStream<Id>, T>::value, "type parameter of this class must derive from irrklangProxy::AudioStream");
-		T* object = new T(std::forward<Ts>(args));
+		T* object = new T(std::forward<Ts&&>(args)...);
 		return irrklangProxy::IAudioStream::makeAudioStream(
 			object, 
 			[](void* user_data) -> void { delete static_cast<T*>(user_data);  },
@@ -620,7 +628,7 @@ struct make_stream_loader
 	static irrklang::IAudioStreamLoader* exec(Ts&&... args)
 	{
 		static_assert(std::is_base_of<irrklangProxy::AudioStreamLoader<Id>, T>::value, "type parameter of this class must derive from irrklangProxy::AudioStreamLoader");
-		T* object = new T(std::forward<Ts>(args));
+		T* object = new T(std::forward<Ts&&>(args)...);
 		return irrklangProxy::IAudioStreamLoader::makeAudioStreamLoader(
 			object, 
 			[](void* user_data) -> void { delete static_cast<T*>(user_data);  },
@@ -637,7 +645,7 @@ struct make_file_reader
 	static irrklang::IFileReader* exec(Ts&&... args)
 	{
 		static_assert(std::is_base_of<irrklangProxy::FileReader<Id>, T>::value, "type parameter of this class must derive from irrklangProxy::FileReader");
-		T* object = new T(std::forward<Ts>(args));
+		T* object = new T(std::forward<Ts&&>(args)...);
 		return irrklangProxy::IFileReader::makeFileReader(
 			object, 
 			[](void* user_data) -> void { delete static_cast<T*>(user_data);  },
@@ -657,7 +665,7 @@ struct make_file_factory
 	static irrklang::IFileFactory* exec(Ts&&... args)
 	{
 		static_assert(std::is_base_of<irrklangProxy::FileFactory<Id>, T>::value, "type parameter of this class must derive from irrklangProxy::FileFactory");
-		T* object = new T(std::forward<Ts>(args));
+		T* object = new T(std::forward<Ts&&>(args)...);
 		return irrklangProxy::IFileFactory::makeFileFactory(
 			object, 
 			[](void* user_data) -> void { delete static_cast<T*>(user_data);  },
@@ -673,7 +681,7 @@ struct make_sound_mixed_output_receiver
 	static irrklang::ISoundMixedOutputReceiver* exec(Ts&&... args)
 	{
 		static_assert(std::is_base_of<irrklangProxy::SoundMixedOutputReceiver<Id>, T>::value, "type parameter of this class must derive from irrklangProxy::SoundMixedOutputReceiver");
-		T* object = new T(std::forward<Ts>(args));
+		T* object = new T(std::forward<Ts&&>(args)...);
 		return irrklangProxy::ISoundMixedOutputReceiver::makeSoundMixedOutputReceiver(
 			object, 
 			[](void* user_data) -> void { delete static_cast<T*>(user_data);  },
@@ -690,7 +698,7 @@ struct make_captured_audio_data_receiver
 	static irrklang::ICapturedAudioDataReceiver* exec(Ts&&... args)
 	{
 		static_assert(std::is_base_of<irrklangProxy::CapturedAudioDataReceiver<Id>, T>::value, "type parameter of this class must derive from irrklangProxy::CapturedAudioDataReceiver");
-		T* object = new T(std::forward<Ts>(args));
+		T* object = new T(std::forward<Ts&&>(args)...);
 		return irrklangProxy::ICapturedAudioDataReceiver::makeCapturedAudioDataReceiver(
 			object, 
 			[](void* user_data) -> void { delete static_cast<T*>(user_data);  },
@@ -706,7 +714,7 @@ struct make_sound_stop_event_receiver
 	static irrklang::ISoundStopEventReceiver* exec(Ts&&... args)
 	{
 		static_assert(std::is_base_of<irrklangProxy::SoundStopEventReceiver<Id>, T>::value, "type parameter of this class must derive from irrklangProxy::SoundStopEventReceiver");
-		T* object = new T(std::forward<Ts>(args));
+		T* object = new T(std::forward<Ts&&>(args)...);
 		return irrklangProxy::ISoundStopEventReceiver::makeSoundStopEventReceiver(
 			object, 
 			[](void* user_data) -> void { delete static_cast<T*>(user_data);  },

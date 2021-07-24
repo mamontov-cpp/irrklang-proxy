@@ -4,6 +4,7 @@
 #include <Windows.h>
 #endif
 
+
 irrklang::ISoundEngine* irrklangProxy::createIrrKlangDevice(irrklang::E_SOUND_OUTPUT_DRIVER driver,
 		int options,
 		const char* deviceID ,
@@ -43,7 +44,32 @@ bool irrklangProxy::makeUTF8fromUTF16string(
 	const wchar_t* pInputString, char* pOutputBuffer, int outputBufferSize
 )
 {
+#ifdef __MINGW32__
+	if (outputBufferSize == 0)
+	{
+		return true;
+	}
+	if (!pInputString || !pOutputBuffer)
+	{
+		return false;
+	}
+	// Took from https://mariusbancila.ro/blog/2008/10/20/writing-utf-8-files-in-c/, see to_utf8
+	// irrKlang somehow lacks this function, even if it's in header.
+	int len = wcslen(pInputString);
+	int length = ::WideCharToMultiByte(CP_UTF8, 0, pInputString, len, NULL, 0, NULL, NULL);
+	if (length ==0)
+	{
+		return true;
+	}
+	if ((length + 1) > outputBufferSize)
+	{
+		return false;
+	}
+	::WideCharToMultiByte( CP_UTF8, 0, pInputString, len, pOutputBuffer, length, NULL, NULL);
+	return true;
+#else
 	return irrklang::makeUTF8fromUTF16string(pInputString, pOutputBuffer, outputBufferSize);
+#endif
 }
 
 void irrklangProxy::grabRefCounted(irrklang::IRefCounted* p)
