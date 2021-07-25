@@ -8,7 +8,7 @@ You see, there is an issue with the irrKlang library - you can't directly link a
 However, using gendef and dlltool you can link to the MSVC library in MinGW and link against it if it uses C API. So, this library allows you to use irrKlang API via this C API, because
 on MinGW-x64 it creates its own libraries, which calls in chain MSVC dll and then irrKlang dll
 
-## But this means, that I'll require MSVC CRT2017 (for built library) is present on the target machine
+## But this means, that I'll require MSVC CRT2017 (for built library) to be present on the target machine
 
 Yes, that's a big drawback, but it's a small price to pay for this task. If somebody got his hands on irrKlang source code, he may be tried to make a direct build and this library never happened.
 
