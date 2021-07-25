@@ -5,7 +5,7 @@
 #endif
 
 
-irrklang::ISoundEngine* irrklangProxy::createIrrKlangDevice(irrklang::E_SOUND_OUTPUT_DRIVER driver,
+irrklang::ISoundEngine* irrklangProxy_createIrrKlangDevice(irrklang::E_SOUND_OUTPUT_DRIVER driver,
 		int options,
 		const char* deviceID ,
 		const char* sdk_version_do_not_use
@@ -14,7 +14,7 @@ irrklang::ISoundEngine* irrklangProxy::createIrrKlangDevice(irrklang::E_SOUND_OU
 	return irrklang::createIrrKlangDevice(driver, options, deviceID, sdk_version_do_not_use);
 }
 
-irrklang::ISoundDeviceList* irrklangProxy::createSoundDeviceList(
+irrklang::ISoundDeviceList* irrklangProxy_createSoundDeviceList(
 	irrklang::E_SOUND_OUTPUT_DRIVER driver ,
 	const char* sdk_version_do_not_use
 )
@@ -22,7 +22,7 @@ irrklang::ISoundDeviceList* irrklangProxy::createSoundDeviceList(
 	return irrklang::createSoundDeviceList(driver, sdk_version_do_not_use);
 }
 
-irrklang::IAudioRecorder* irrklangProxy::createIrrKlangAudioRecorder(
+irrklang::IAudioRecorder* irrklangProxy_createIrrKlangAudioRecorder(
 	irrklang::ISoundEngine* irrKlangDeviceForPlayback,
 	irrklang::E_SOUND_OUTPUT_DRIVER driver,
 	const char* deviceID,
@@ -32,7 +32,7 @@ irrklang::IAudioRecorder* irrklangProxy::createIrrKlangAudioRecorder(
 	return irrklang::createIrrKlangAudioRecorder(irrKlangDeviceForPlayback, driver, deviceID, sdk_version_do_not_use);
 }
 
-irrklang::ISoundDeviceList* irrklangProxy::createAudioRecorderDeviceList(
+irrklang::ISoundDeviceList* irrklangProxy_createAudioRecorderDeviceList(
 	irrklang::E_SOUND_OUTPUT_DRIVER driver,
 	const char* sdk_version_do_not_use
 )
@@ -40,7 +40,7 @@ irrklang::ISoundDeviceList* irrklangProxy::createAudioRecorderDeviceList(
 	return irrklang::createAudioRecorderDeviceList(driver, sdk_version_do_not_use);
 }
 
-bool irrklangProxy::makeUTF8fromUTF16string(
+bool irrklangProxy_makeUTF8fromUTF16string(
 	const wchar_t* pInputString, char* pOutputBuffer, int outputBufferSize
 )
 {
@@ -72,32 +72,32 @@ bool irrklangProxy::makeUTF8fromUTF16string(
 #endif
 }
 
-void irrklangProxy::grabRefCounted(irrklang::IRefCounted* p)
+void irrklangProxy_grabRefCounted(irrklang::IRefCounted* p)
 {
 	p->grab();
 }
 
-void irrklangProxy::dropRefCounted(irrklang::IRefCounted* p)
+void irrklangProxy_dropRefCounted(irrklang::IRefCounted* p)
 {
 	p->drop();
 }
 
-void irrklangProxy::grabVirtualRefCounted(irrklang::IVirtualRefCounted* p)
+void irrklangProxy_grabVirtualRefCounted(irrklang::IVirtualRefCounted* p)
 {
 	p->grab();
 }
 
-void irrklangProxy::dropVirtualRefCounted(irrklang::IVirtualRefCounted* p)
+void irrklangProxy_dropVirtualRefCounted(irrklang::IVirtualRefCounted* p)
 {
 	p->drop();
 }
 
-irrklang::SAudioStreamFormat irrklangProxy::SAudioStreamFormat::makeDefaultFormat()
+irrklang::SAudioStreamFormat irrklangProxy_SAudioStreamFormat_makeDefaultFormat()
 {
 	return { 2, -1, 44100, irrklang::ESF_U8 };
 }
 
-irrklang::SAudioStreamFormat irrklangProxy::SAudioStreamFormat::makeFormat(
+irrklang::SAudioStreamFormat irrklangProxy_SAudioStreamFormat_makeFormat(
 	int channelCount,
 	int frameCount,
 	int sampleRate,
@@ -107,98 +107,98 @@ irrklang::SAudioStreamFormat irrklangProxy::SAudioStreamFormat::makeFormat(
 	return { channelCount, frameCount, sampleRate, sampleFormat };
 }
 
-void irrklangProxy::SAudioStreamFormat::setChannelCount(irrklang::SAudioStreamFormat& format, int channelCount)
+void irrklangProxy_SAudioStreamFormat_setChannelCount(irrklang::SAudioStreamFormat& format, int channelCount)
 {
 	format.ChannelCount = channelCount;
 }
 
 
-int irrklangProxy::SAudioStreamFormat::getChannelCount(const irrklang::SAudioStreamFormat& format)
+int irrklangProxy_SAudioStreamFormat_getChannelCount(const irrklang::SAudioStreamFormat& format)
 {
 	return format.ChannelCount;
 }
 
-void irrklangProxy::SAudioStreamFormat::setFrameCount(irrklang::SAudioStreamFormat& format, int frameCount)
+void irrklangProxy_SAudioStreamFormat_setFrameCount(irrklang::SAudioStreamFormat& format, int frameCount)
 {
 	format.FrameCount = frameCount;
 }
 
-int irrklangProxy::SAudioStreamFormat::getFrameCount(const irrklang::SAudioStreamFormat& format)
+int irrklangProxy_SAudioStreamFormat_getFrameCount(const irrklang::SAudioStreamFormat& format)
 {
 	return format.FrameCount;
 }
 
-void irrklangProxy::SAudioStreamFormat::setSampleRate(irrklang::SAudioStreamFormat& format, int sampleRate)
+void irrklangProxy_SAudioStreamFormat_setSampleRate(irrklang::SAudioStreamFormat& format, int sampleRate)
 {
 	format.SampleRate = sampleRate;
 }
 
-int irrklangProxy::SAudioStreamFormat::getSampleRate(const irrklang::SAudioStreamFormat& format)
+int irrklangProxy_SAudioStreamFormat_getSampleRate(const irrklang::SAudioStreamFormat& format)
 {
 	return format.SampleRate;
 }
 
-void irrklangProxy::SAudioStreamFormat::setSampleFormat(irrklang::SAudioStreamFormat& format, irrklang::ESampleFormat sampleFormat)
+void irrklangProxy_SAudioStreamFormat_setSampleFormat(irrklang::SAudioStreamFormat& format, irrklang::ESampleFormat sampleFormat)
 {
 	format.SampleFormat = sampleFormat;
 }
 
-irrklang::ESampleFormat irrklangProxy::SAudioStreamFormat::getSampleFormat(const irrklang::SAudioStreamFormat& format)
+irrklang::ESampleFormat irrklangProxy_SAudioStreamFormat_getSampleFormat(const irrklang::SAudioStreamFormat& format)
 {
 	return format.SampleFormat;
 }
 
-irrklang::ik_s32 irrklangProxy::SAudioStreamFormat::getSampleSize(const irrklang::SAudioStreamFormat& format)
+irrklang::ik_s32 irrklangProxy_SAudioStreamFormat_getSampleSize(const irrklang::SAudioStreamFormat& format)
 {
 	return format.getSampleSize();
 }
 
-irrklang::ik_s32 irrklangProxy::SAudioStreamFormat::getFrameSize(const irrklang::SAudioStreamFormat& format)
+irrklang::ik_s32 irrklangProxy_SAudioStreamFormat_getFrameSize(const irrklang::SAudioStreamFormat& format)
 {
 	return format.getFrameSize();
 }
 
-irrklang::ik_s32 irrklangProxy::SAudioStreamFormat::getSampleDataSize(const irrklang::SAudioStreamFormat& format)
+irrklang::ik_s32 irrklangProxy_SAudioStreamFormat_getSampleDataSize(const irrklang::SAudioStreamFormat& format)
 {
 	return format.getSampleDataSize();
 }
 
-irrklang::ik_s32 irrklangProxy::SAudioStreamFormat::getBytesPerSecond(const irrklang::SAudioStreamFormat& format)
+irrklang::ik_s32 irrklangProxy_SAudioStreamFormat_getBytesPerSecond(const irrklang::SAudioStreamFormat& format)
 {
 	return format.getBytesPerSecond();
 }
 
-void* irrklangProxy::SInternalAudioInterface::getIDirectSound(const irrklang::SInternalAudioInterface& i)
+void* irrklangProxy_SInternalAudioInterface_getIDirectSound(const irrklang::SInternalAudioInterface& i)
 {
 	return i.pIDirectSound;
 }
 
-void* irrklangProxy::SInternalAudioInterface::getIDirectSound8(const irrklang::SInternalAudioInterface& i)
+void* irrklangProxy_SInternalAudioInterface_getIDirectSound8(const irrklang::SInternalAudioInterface& i)
 {
 	return i.pIDirectSound8;
 }
 
-void* irrklangProxy::SInternalAudioInterface::getWinMM_HWaveOut(const irrklang::SInternalAudioInterface& i)
+void* irrklangProxy_SInternalAudioInterface_getWinMM_HWaveOut(const irrklang::SInternalAudioInterface& i)
 {
 	return i.pWinMM_HWaveOut;
 }
 
-void* irrklangProxy::SInternalAudioInterface::getALSA_SND_PCM(const irrklang::SInternalAudioInterface& i)
+void* irrklangProxy_SInternalAudioInterface_getALSA_SND_PCM(const irrklang::SInternalAudioInterface& i)
 {
 	return i.pALSA_SND_PCM;
 }
 
-irrklang::ik_u32 irrklangProxy::SInternalAudioInterface::getCoreAudioDeviceID(const irrklang::SInternalAudioInterface& i)
+irrklang::ik_u32 irrklangProxy_SInternalAudioInterface_getCoreAudioDeviceID(const irrklang::SInternalAudioInterface& i)
 {
 	return i.pCoreAudioDeciceID;
 }
 
-void irrklangProxy::IAudioStream::grabAudioStream(irrklang::IAudioStream* stream)
+void irrklangProxy_IAudioStream_grabAudioStream(irrklang::IAudioStream* stream)
 {
 	stream->grab();
 }
 
-void irrklangProxy::IAudioStream::dropAudioStream(irrklang::IAudioStream* stream)
+void irrklangProxy_IAudioStream_dropAudioStream(irrklang::IAudioStream* stream)
 {
 	stream->drop();
 }
@@ -261,7 +261,7 @@ private:
 	
 }
 
-irrklang::IAudioStream*  irrklangProxy::IAudioStream::makeAudioStream(
+irrklang::IAudioStream*  irrklangProxy_IAudioStream_makeAudioStream(
 	void* user_data, 
 	irrklangProxy::dtorFn dtor, 
 	irrklangProxy::IAudioStream::getFormatFn getFormat, 
@@ -272,32 +272,32 @@ irrklang::IAudioStream*  irrklangProxy::IAudioStream::makeAudioStream(
 {
 	return new irrklangProxy::IAudioStreamWrapper(user_data, dtor, getFormat, setPosition, getIsSeekingSupported, readFrames);
 }
-irrklang::SAudioStreamFormat irrklangProxy::IAudioStream::getFormat(irrklang::IAudioStream* stream)
+irrklang::SAudioStreamFormat irrklangProxy_IAudioStream_getFormat(irrklang::IAudioStream* stream)
 {
 	return stream->getFormat();
 }
 
-bool irrklangProxy::IAudioStream::setPosition(irrklang::IAudioStream* stream, irrklang::ik_s32 pos)
+bool irrklangProxy_IAudioStream_setPosition(irrklang::IAudioStream* stream, irrklang::ik_s32 pos)
 {
 	return stream->setPosition(pos);
 }
 
-bool irrklangProxy::IAudioStream::getIsSeekingSupported(irrklang::IAudioStream* stream)
+bool irrklangProxy_IAudioStream_getIsSeekingSupported(irrklang::IAudioStream* stream)
 {
 	return stream->getIsSeekingSupported();
 }
 
-irrklang::ik_s32 irrklangProxy::IAudioStream::readFrames(irrklang::IAudioStream* stream, void* target, irrklang::ik_s32 frameCountToRead)
+irrklang::ik_s32 irrklangProxy_IAudioStream_readFrames(irrklang::IAudioStream* stream, void* target, irrklang::ik_s32 frameCountToRead)
 {
 	return stream->readFrames(target, frameCountToRead);
 }
 
-void irrklangProxy::IAudioStreamLoader::grabAudioStreamLoader(irrklang::IAudioStreamLoader* stream)
+void irrklangProxy_IAudioStreamLoader_grabAudioStreamLoader(irrklang::IAudioStreamLoader* stream)
 {
 	stream->grab();
 }
 
-void irrklangProxy::IAudioStreamLoader::dropAudioStreamLoader(irrklang::IAudioStreamLoader* stream)
+void irrklangProxy_IAudioStreamLoader_dropAudioStreamLoader(irrklang::IAudioStreamLoader* stream)
 {
 	stream->drop();
 }
@@ -345,7 +345,7 @@ private:
 	
 }
 
-irrklang::IAudioStreamLoader* irrklangProxy::IAudioStreamLoader::makeAudioStreamLoader(
+irrklang::IAudioStreamLoader* irrklangProxy_IAudioStreamLoader_makeAudioStreamLoader(
 		void* user_data, 
 		irrklangProxy::dtorFn dtor, 
 		irrklangProxy::IAudioStreamLoader::isALoadableFileExtensionFn isALoadableFileExtensionVal, 
@@ -355,22 +355,22 @@ irrklang::IAudioStreamLoader* irrklangProxy::IAudioStreamLoader::makeAudioStream
 	return new irrklangProxy::IAudioStreamLoaderWrapper(user_data, dtor, isALoadableFileExtensionVal, createAudioStreamVal);
 }
 
-bool irrklangProxy::IAudioStreamLoader::isALoadableFileExtension(irrklang::IAudioStreamLoader* stream, const irrklang::ik_c8* fileName)
+bool irrklangProxy_IAudioStreamLoader_isALoadableFileExtension(irrklang::IAudioStreamLoader* stream, const irrklang::ik_c8* fileName)
 {
 	return stream->isALoadableFileExtension(fileName);
 }
 
-irrklang::IAudioStream* irrklangProxy::IAudioStreamLoader::createAudioStream(irrklang::IAudioStreamLoader* stream, irrklang::IFileReader* reader)
+irrklang::IAudioStream* irrklangProxy_IAudioStreamLoader_createAudioStream(irrklang::IAudioStreamLoader* stream, irrklang::IFileReader* reader)
 {
 	return stream->createAudioStream(reader);
 }
 
-void irrklangProxy::IFileReader::grabFileReader(irrklang::IFileReader* reader)
+void irrklangProxy_IFileReader_grabFileReader(irrklang::IFileReader* reader)
 {
 	reader->grab();
 }
 
-void irrklangProxy::IFileReader::dropFileReader(irrklang::IFileReader* reader)
+void irrklangProxy_IFileReader_dropFileReader(irrklang::IFileReader* reader)
 {
 	reader->drop();
 }
@@ -445,7 +445,7 @@ private:
 }
 
 
-irrklang::IFileReader* irrklangProxy::IFileReader::makeFileReader(
+irrklang::IFileReader* irrklangProxy_IFileReader_makeFileReader(
 		void* user_data, 
 		irrklangProxy::dtorFn dtor, 
 		irrklangProxy::IFileReader::readFn readVal, 
@@ -458,27 +458,27 @@ irrklang::IFileReader* irrklangProxy::IFileReader::makeFileReader(
 	return new irrklangProxy::IFileReaderWrapper(user_data, dtor, readVal, seekVal, getSizeVal, getPosVal, getFileNameVal);
 }
 
-irrklang::ik_s32  irrklangProxy::IFileReader::read(irrklang::IFileReader* reader, void* buffer, irrklang::ik_u32 sizeToRead)
+irrklang::ik_s32  irrklangProxy_IFileReader_read(irrklang::IFileReader* reader, void* buffer, irrklang::ik_u32 sizeToRead)
 {
 	return reader->read(buffer, sizeToRead);
 }
 
-bool irrklangProxy::IFileReader::seek(irrklang::IFileReader* reader, irrklang::ik_s32 finalPos, bool relativeMovement)
+bool irrklangProxy_IFileReader_seek(irrklang::IFileReader* reader, irrklang::ik_s32 finalPos, bool relativeMovement)
 {
 	return reader->seek(finalPos, relativeMovement);
 }
 
-irrklang::ik_s32 irrklangProxy::IFileReader::getSize(irrklang::IFileReader* reader)
+irrklang::ik_s32 irrklangProxy_IFileReader_getSize(irrklang::IFileReader* reader)
 {
 	return reader->getSize();
 }
 
-irrklang::ik_s32 irrklangProxy::IFileReader::getPos(irrklang::IFileReader* reader)
+irrklang::ik_s32 irrklangProxy_IFileReader_getPos(irrklang::IFileReader* reader)
 {
 	return reader->getPos();
 }
 
-const irrklang::ik_c8* irrklangProxy::IFileReader::getFileName(irrklang::IFileReader* reader)
+const irrklang::ik_c8* irrklangProxy_IFileReader_getFileName(irrklang::IFileReader* reader)
 {
 	return reader->getFileName();
 }
@@ -518,7 +518,7 @@ private:
 
 }
 
-irrklang::IFileFactory* irrklangProxy::IFileFactory::makeFileFactory(
+irrklang::IFileFactory* irrklangProxy_IFileFactory_makeFileFactory(
 	void* user_data, 
 	irrklangProxy::dtorFn dtor, 
 	irrklangProxy::IFileFactory::createFileReaderFn createFileReaderVal
@@ -527,17 +527,17 @@ irrklang::IFileFactory* irrklangProxy::IFileFactory::makeFileFactory(
 	return new irrklangProxy::IFileFactoryWrapper(user_data, dtor, createFileReaderVal);
 }
 
-void irrklangProxy::IFileFactory::grabFileFactory(irrklang::IFileFactory* factory)
+void irrklangProxy_IFileFactory_grabFileFactory(irrklang::IFileFactory* factory)
 {
 	factory->grab();
 }
 
-void irrklangProxy::IFileFactory::dropFileFactory(irrklang::IFileFactory* factory)
+void irrklangProxy_IFileFactory_dropFileFactory(irrklang::IFileFactory* factory)
 {
 	factory->drop();
 }
 
-irrklang::IFileReader*  irrklangProxy::IFileFactory::createFileReader(irrklang::IFileFactory* factory, const irrklang::ik_c8* filename)
+irrklang::IFileReader*  irrklangProxy_IFileFactory_createFileReader(irrklang::IFileFactory* factory, const irrklang::ik_c8* filename)
 {
 	return factory->createFileReader(filename);
 }
@@ -578,7 +578,7 @@ private:
 
 }
 
-irrklang::ISoundMixedOutputReceiver* irrklangProxy::ISoundMixedOutputReceiver::makeSoundMixedOutputReceiver(
+irrklang::ISoundMixedOutputReceiver* irrklangProxy_ISoundMixedOutputReceiver_makeSoundMixedOutputReceiver(
 	void* user_data, 
 	irrklangProxy::dtorFn dtor, 
 	irrklangProxy::ISoundMixedOutputReceiver::onAudioDataReadyFn onAudioDataReadyVal
@@ -587,7 +587,7 @@ irrklang::ISoundMixedOutputReceiver* irrklangProxy::ISoundMixedOutputReceiver::m
 	return new irrklangProxy::ISoundMixedOutputReceiverWrapper(user_data, dtor, onAudioDataReadyVal);
 }
 
-void irrklangProxy::ISoundMixedOutputReceiver::onAudioDataReady(irrklang::ISoundMixedOutputReceiver* receiver, const void* data, int byteCount, int playbackrate)
+void irrklangProxy_ISoundMixedOutputReceiver_onAudioDataReady(irrklang::ISoundMixedOutputReceiver* receiver, const void* data, int byteCount, int playbackrate)
 {
 	receiver->OnAudioDataReady(data, byteCount, playbackrate);
 }
@@ -626,7 +626,7 @@ private:
 
 }
 
-irrklang::ICapturedAudioDataReceiver* irrklangProxy::ICapturedAudioDataReceiver::makeCapturedAudioDataReceiver(
+irrklang::ICapturedAudioDataReceiver* irrklangProxy_ICapturedAudioDataReceiver_makeCapturedAudioDataReceiver(
 	void* user_data,
 	irrklangProxy::dtorFn dtor,
 	irrklangProxy::ICapturedAudioDataReceiver::onReceiveAudioDataStreamChunkFn onReceiveAudioDataStreamChunkVal
@@ -635,17 +635,17 @@ irrklang::ICapturedAudioDataReceiver* irrklangProxy::ICapturedAudioDataReceiver:
 	return new irrklangProxy::ICapturedAudioDataReceiverWrapper(user_data, dtor, onReceiveAudioDataStreamChunkVal);
 }
 
-void irrklangProxy::ICapturedAudioDataReceiver::grabCapturedAudioDataReceiver(irrklang::ICapturedAudioDataReceiver* receiver)
+void irrklangProxy_ICapturedAudioDataReceiver_grabCapturedAudioDataReceiver(irrklang::ICapturedAudioDataReceiver* receiver)
 {
 	receiver->grab();
 }
 
-void irrklangProxy::ICapturedAudioDataReceiver::dropCapturedAudioDataReceiver(irrklang::ICapturedAudioDataReceiver* receiver)
+void irrklangProxy_ICapturedAudioDataReceiver_dropCapturedAudioDataReceiver(irrklang::ICapturedAudioDataReceiver* receiver)
 {
 	receiver->drop();
 }
 
-void irrklangProxy::ICapturedAudioDataReceiver::onReceiveAudioDataStreamChunk(irrklang::ICapturedAudioDataReceiver* receiver, unsigned char* audioData, unsigned long lengthInBytes)
+void irrklangProxy_ICapturedAudioDataReceiver_onReceiveAudioDataStreamChunk(irrklang::ICapturedAudioDataReceiver* receiver, unsigned char* audioData, unsigned long lengthInBytes)
 {
 	receiver->OnReceiveAudioDataStreamChunk(audioData, lengthInBytes);
 }
@@ -684,7 +684,7 @@ private:
 
 }
 
-irrklang::ISoundStopEventReceiver* irrklangProxy::ISoundStopEventReceiver::makeSoundStopEventReceiver(
+irrklang::ISoundStopEventReceiver* irrklangProxy_ISoundStopEventReceiver_makeSoundStopEventReceiver(
 	void* user_data,
 	irrklangProxy::dtorFn dtor,
 	irrklangProxy::ISoundStopEventReceiver::onSoundStoppedFn onSoundStoppedVal
@@ -693,17 +693,17 @@ irrklang::ISoundStopEventReceiver* irrklangProxy::ISoundStopEventReceiver::makeS
 	return new irrklangProxy::ISoundStopEventReceiverWrapper(user_data, dtor, onSoundStoppedVal);
 }
 
-void irrklangProxy::ISoundStopEventReceiver::onSoundStopped(irrklang::ISoundStopEventReceiver* receiver, irrklang::ISound* sound, irrklang::E_STOP_EVENT_CAUSE reason, void* userData)
+void irrklangProxy_ISoundStopEventReceiver_onSoundStopped(irrklang::ISoundStopEventReceiver* receiver, irrklang::ISound* sound, irrklang::E_STOP_EVENT_CAUSE reason, void* userData)
 {
 	receiver->OnSoundStopped(sound, reason, userData);
 }
 
-const char* irrklangProxy::ISoundEngine::getDriverName(irrklang::ISoundEngine* engine)
+const char* irrklangProxy_ISoundEngine_getDriverName(irrklang::ISoundEngine* engine)
 {
 	return engine->getDriverName();
 }
 
-irrklang::ISound* irrklangProxy::ISoundEngine::play2DFileName(
+irrklang::ISound* irrklangProxy_ISoundEngine_play2DFileName(
 	irrklang::ISoundEngine* engine,
 	const char* soundFileName,
 	bool playLooped,
@@ -716,7 +716,7 @@ irrklang::ISound* irrklangProxy::ISoundEngine::play2DFileName(
 	return engine->play2D(soundFileName, playLooped, startPaused, track, streamMode, enableSoundEffects);
 }
 
-irrklang::ISound* irrklangProxy::ISoundEngine::play2DSoundSource(
+irrklang::ISound* irrklangProxy_ISoundEngine_play2DSoundSource(
 	irrklang::ISoundEngine* engine,
 	irrklang::ISoundSource* source,
 	bool playLooped ,
@@ -728,7 +728,7 @@ irrklang::ISound* irrklangProxy::ISoundEngine::play2DSoundSource(
 	return engine->play2D(source, playLooped, startPaused, track, enableSoundEffects);
 }
 
-irrklang::ISound* irrklangProxy::ISoundEngine::play3DFileName(
+irrklang::ISound* irrklangProxy_ISoundEngine_play3DFileName(
 	irrklang::ISoundEngine* engine,
 	const char* soundFileName,
 	const irrklang::vec3df& pos,
@@ -743,7 +743,7 @@ irrklang::ISound* irrklangProxy::ISoundEngine::play3DFileName(
 }
 
 
-irrklang::ISound* irrklangProxy::ISoundEngine::play3DSoundSource(
+irrklang::ISound* irrklangProxy_ISoundEngine_play3DSoundSource(
 	irrklang::ISoundEngine* engine,
 	irrklang::ISoundSource* source,
 	const irrklang::vec3df& pos,
@@ -757,43 +757,43 @@ irrklang::ISound* irrklangProxy::ISoundEngine::play3DSoundSource(
 }
 
 
-void irrklangProxy::ISoundEngine::stopAllSounds(irrklang::ISoundEngine* engine)
+void irrklangProxy_ISoundEngine_stopAllSounds(irrklang::ISoundEngine* engine)
 {
 	engine->stopAllSounds();
 }
 
 
-void  irrklangProxy::ISoundEngine::setAllSoundsPaused(irrklang::ISoundEngine* engine, bool bPaused)
+void  irrklangProxy_ISoundEngine_setAllSoundsPaused(irrklang::ISoundEngine* engine, bool bPaused)
 {
 	engine->setAllSoundsPaused(bPaused);
 }
 
-irrklang::ISoundSource* irrklangProxy::ISoundEngine::getSoundSourceByName(irrklang::ISoundEngine* engine, const char* soundName, bool addIfNotFound)
+irrklang::ISoundSource* irrklangProxy_ISoundEngine_getSoundSourceByName(irrklang::ISoundEngine* engine, const char* soundName, bool addIfNotFound)
 {
 	return engine->getSoundSource(soundName, addIfNotFound);
 }
 
-irrklang::ISoundSource* irrklangProxy::ISoundEngine::getSoundSourceByIndex(irrklang::ISoundEngine* engine, int index)
+irrklang::ISoundSource* irrklangProxy_ISoundEngine_getSoundSourceByIndex(irrklang::ISoundEngine* engine, int index)
 {
 	return engine->getSoundSource(index);
 }
 
-int irrklangProxy::ISoundEngine::getSoundSourceCount(irrklang::ISoundEngine* engine)
+int irrklangProxy_ISoundEngine_getSoundSourceCount(irrklang::ISoundEngine* engine)
 {
 	return engine->getSoundSourceCount();
 }
 
-irrklang::ISoundSource*  irrklangProxy::ISoundEngine::addSoundSourceFromFile(irrklang::ISoundEngine* engine, const char* fileName, irrklang::E_STREAM_MODE mode, bool preload)
+irrklang::ISoundSource*  irrklangProxy_ISoundEngine_addSoundSourceFromFile(irrklang::ISoundEngine* engine, const char* fileName, irrklang::E_STREAM_MODE mode, bool preload)
 {
 	return engine->addSoundSourceFromFile(fileName, mode, preload);
 }
 
-irrklang::ISoundSource* irrklangProxy::ISoundEngine::addSoundSourceFromMemory(irrklang::ISoundEngine* engine, void* memory, int sizeInBytes, const char* soundName, bool copyMemory)
+irrklang::ISoundSource* irrklangProxy_ISoundEngine_addSoundSourceFromMemory(irrklang::ISoundEngine* engine, void* memory, int sizeInBytes, const char* soundName, bool copyMemory)
 {
 	return engine->addSoundSourceFromMemory(memory, sizeInBytes, soundName, copyMemory);
 }
 
-irrklang::ISoundSource*  irrklangProxy::ISoundEngine::addSoundSourceFromPCMData(
+irrklang::ISoundSource*  irrklangProxy_ISoundEngine_addSoundSourceFromPCMData(
 	irrklang::ISoundEngine* engine,
 	void* memory, 
 	int sizeInBytes, 
@@ -805,37 +805,37 @@ irrklang::ISoundSource*  irrklangProxy::ISoundEngine::addSoundSourceFromPCMData(
 	return engine->addSoundSourceFromPCMData(memory, sizeInBytes, soundName, format, copyMemory);
 }
 
-irrklang::ISoundSource* irrklangProxy::ISoundEngine::addSoundSourceAlias(irrklang::ISoundEngine* engine, irrklang::ISoundSource* baseSource, const char* soundName)
+irrklang::ISoundSource* irrklangProxy_ISoundEngine_addSoundSourceAlias(irrklang::ISoundEngine* engine, irrklang::ISoundSource* baseSource, const char* soundName)
 {
 	return engine->addSoundSourceAlias(baseSource, soundName);
 }
 
-void irrklangProxy::ISoundEngine::removeSoundSource(irrklang::ISoundEngine* engine, irrklang::ISoundSource* source)
+void irrklangProxy_ISoundEngine_removeSoundSource(irrklang::ISoundEngine* engine, irrklang::ISoundSource* source)
 {
 	engine->removeSoundSource(source);
 }
 
-void irrklangProxy::ISoundEngine::removeSoundSourceByName(irrklang::ISoundEngine* engine, const char* name)
+void irrklangProxy_ISoundEngine_removeSoundSourceByName(irrklang::ISoundEngine* engine, const char* name)
 {
 	engine->removeSoundSource(name);
 }
 
-void irrklangProxy::ISoundEngine::removeAllSoundSources(irrklang::ISoundEngine* engine)
+void irrklangProxy_ISoundEngine_removeAllSoundSources(irrklang::ISoundEngine* engine)
 {
 	engine->removeAllSoundSources();
 }
 
-void irrklangProxy::ISoundEngine::setSoundVolume(irrklang::ISoundEngine* engine, float volume)
+void irrklangProxy_ISoundEngine_setSoundVolume(irrklang::ISoundEngine* engine, float volume)
 {
 	engine->setSoundVolume(volume);
 }
 
-float irrklangProxy::ISoundEngine::getSoundVolume(irrklang::ISoundEngine* engine)
+float irrklangProxy_ISoundEngine_getSoundVolume(irrklang::ISoundEngine* engine)
 {
 	return engine->getSoundVolume();
 }
 
-void irrklangProxy::ISoundEngine::setListenerPosition(
+void irrklangProxy_ISoundEngine_setListenerPosition(
 	irrklang::ISoundEngine* engine,
 	const irrklang::vec3df& pos,
 	const irrklang::vec3df& lookdir,
@@ -846,168 +846,168 @@ void irrklangProxy::ISoundEngine::setListenerPosition(
 	engine->setListenerPosition(pos, lookdir, velPerSecond, upVector);
 }
 
-void irrklangProxy::ISoundEngine::updateSoundEngine(irrklang::ISoundEngine* engine)
+void irrklangProxy_ISoundEngine_updateSoundEngine(irrklang::ISoundEngine* engine)
 {
 	engine->update();
 }
 
 
-void irrklangProxy::ISoundEngine::grabSoundEngine(irrklang::ISoundEngine* engine)
+void irrklangProxy_ISoundEngine_grabSoundEngine(irrklang::ISoundEngine* engine)
 {
 	engine->grab();
 }
 
-void irrklangProxy::ISoundEngine::dropSoundEngine(irrklang::ISoundEngine* engine)
+void irrklangProxy_ISoundEngine_dropSoundEngine(irrklang::ISoundEngine* engine)
 {
 	engine->drop();
 }
 
-bool irrklangProxy::ISoundEngine::isCurrentlyPlayingByName(irrklang::ISoundEngine* engine, const char* soundName)
+bool irrklangProxy_ISoundEngine_isCurrentlyPlayingByName(irrklang::ISoundEngine* engine, const char* soundName)
 {
 	return engine->isCurrentlyPlaying(soundName);
 }
 
-bool irrklangProxy::ISoundEngine::isCurrentlyPlayingBySource(irrklang::ISoundEngine* engine, irrklang::ISoundSource* source)
+bool irrklangProxy_ISoundEngine_isCurrentlyPlayingBySource(irrklang::ISoundEngine* engine, irrklang::ISoundSource* source)
 {
 	return engine->isCurrentlyPlaying(source);
 }
 
-void irrklangProxy::ISoundEngine::registerAudioStreamLoader(irrklang::ISoundEngine* engine, irrklang::IAudioStreamLoader* loader)
+void irrklangProxy_ISoundEngine_registerAudioStreamLoader(irrklang::ISoundEngine* engine, irrklang::IAudioStreamLoader* loader)
 {
 	engine->registerAudioStreamLoader(loader);
 }
 
-bool irrklangProxy::ISoundEngine::isMultiThreaded(irrklang::ISoundEngine* engine)
+bool irrklangProxy_ISoundEngine_isMultiThreaded(irrklang::ISoundEngine* engine)
 {
 	return engine->isMultiThreaded();
 }
 
-void irrklangProxy::ISoundEngine::addFileFactory(irrklang::ISoundEngine* engine,irrklang::IFileFactory* fileFactory)
+void irrklangProxy_ISoundEngine_addFileFactory(irrklang::ISoundEngine* engine,irrklang::IFileFactory* fileFactory)
 {
 	engine->addFileFactory(fileFactory);
 }
 
-void irrklangProxy::ISoundEngine::setDefault3DSoundMinDistance(irrklang::ISoundEngine* engine, float minDistance)
+void irrklangProxy_ISoundEngine_setDefault3DSoundMinDistance(irrklang::ISoundEngine* engine, float minDistance)
 {
 	engine->setDefault3DSoundMinDistance(minDistance);
 }
 
-float irrklangProxy::ISoundEngine::getDefault3DSoundMinDistance(irrklang::ISoundEngine* engine)
+float irrklangProxy_ISoundEngine_getDefault3DSoundMinDistance(irrklang::ISoundEngine* engine)
 {
 	return engine->getDefault3DSoundMinDistance();
 }
 
-void irrklangProxy::ISoundEngine::setDefault3DSoundMaxDistance(irrklang::ISoundEngine* engine, float maxDistance)
+void irrklangProxy_ISoundEngine_setDefault3DSoundMaxDistance(irrklang::ISoundEngine* engine, float maxDistance)
 {
 	engine->setDefault3DSoundMaxDistance(maxDistance);
 }
 
-float irrklangProxy::ISoundEngine::getDefault3DSoundMaxDistance(irrklang::ISoundEngine* engine)
+float irrklangProxy_ISoundEngine_getDefault3DSoundMaxDistance(irrklang::ISoundEngine* engine)
 {
 	return engine->getDefault3DSoundMaxDistance();
 }
 
-void irrklangProxy::ISoundEngine::setRolloffFactor(irrklang::ISoundEngine* engine, float rolloff)
+void irrklangProxy_ISoundEngine_setRolloffFactor(irrklang::ISoundEngine* engine, float rolloff)
 {
 	engine->setRolloffFactor(rolloff);
 }
 
-void irrklangProxy::ISoundEngine::setDopplerEffectParameters(irrklang::ISoundEngine* engine, float dopplerFactor, float distanceFactor)
+void irrklangProxy_ISoundEngine_setDopplerEffectParameters(irrklang::ISoundEngine* engine, float dopplerFactor, float distanceFactor)
 {
 	engine->setDopplerEffectParameters(dopplerFactor, distanceFactor);
 }
 
-bool irrklangProxy::ISoundEngine::loadPlugins(irrklang::ISoundEngine* engine, const char* path)
+bool irrklangProxy_ISoundEngine_loadPlugins(irrklang::ISoundEngine* engine, const char* path)
 {
 	return engine->loadPlugins(path);
 }
 
-const irrklang::SInternalAudioInterface* irrklangProxy::ISoundEngine::getInternalAudioInterface(irrklang::ISoundEngine* engine)
+const irrklang::SInternalAudioInterface* irrklangProxy_ISoundEngine_getInternalAudioInterface(irrklang::ISoundEngine* engine)
 {
 	return &(engine->getInternalAudioInterface());
 }
 
-bool irrklangProxy::ISoundEngine::setMixedDataOutputReceiver(irrklang::ISoundEngine* engine, irrklang::ISoundMixedOutputReceiver* receiver)
+bool irrklangProxy_ISoundEngine_setMixedDataOutputReceiver(irrklang::ISoundEngine* engine, irrklang::ISoundMixedOutputReceiver* receiver)
 {
 	return engine->setMixedDataOutputReceiver(receiver);
 }
 
-int irrklangProxy::ISoundDeviceList::getDeviceCount(irrklang::ISoundDeviceList* list)
+int irrklangProxy_ISoundDeviceList_getDeviceCount(irrklang::ISoundDeviceList* list)
 {
 	return list->getDeviceCount();
 }
 
-const char*  irrklangProxy::ISoundDeviceList::getDeviceID(irrklang::ISoundDeviceList* list, int index)
+const char*  irrklangProxy_ISoundDeviceList_getDeviceID(irrklang::ISoundDeviceList* list, int index)
 {
 	return list->getDeviceID(index);
 }
 
-const char* KDECL irrklangProxy::ISoundDeviceList::getDeviceDescription(irrklang::ISoundDeviceList* list, int index)
+const char* IRRKLANG_PROXY_CALLCONV irrklangProxy_ISoundDeviceList_getDeviceDescription(irrklang::ISoundDeviceList* list, int index)
 {
 	return list->getDeviceDescription(index);
 }
 
-void irrklangProxy::ISoundDeviceList::grabSoundDeviceList(irrklang::ISoundDeviceList* list)
+void irrklangProxy_ISoundDeviceList_grabSoundDeviceList(irrklang::ISoundDeviceList* list)
 {
 	list->grab();
 }
 
-void irrklangProxy::ISoundDeviceList::dropSoundDeviceList(irrklang::ISoundDeviceList* list)
+void irrklangProxy_ISoundDeviceList_dropSoundDeviceList(irrklang::ISoundDeviceList* list)
 {
 	list->drop();
 }
 
-bool irrklangProxy::IAudioRecorder::startRecordingBufferedAudio(irrklang::IAudioRecorder* recorder, irrklang::ik_s32 sampleRate , irrklang::ESampleFormat sampleFormat, irrklang::ik_s32 channelCount)
+bool irrklangProxy_IAudioRecorder_startRecordingBufferedAudio(irrklang::IAudioRecorder* recorder, irrklang::ik_s32 sampleRate , irrklang::ESampleFormat sampleFormat, irrklang::ik_s32 channelCount)
 {
 	return recorder->startRecordingBufferedAudio(sampleRate, sampleFormat, channelCount);
 }
 
-bool irrklangProxy::IAudioRecorder::startRecordingCustomHandledAudio(irrklang::IAudioRecorder* recorder, irrklang::ICapturedAudioDataReceiver* receiver, irrklang::ik_s32 sampleRate, irrklang::ESampleFormat sampleFormat, irrklang::ik_s32 channelCount)
+bool irrklangProxy_IAudioRecorder_startRecordingCustomHandledAudio(irrklang::IAudioRecorder* recorder, irrklang::ICapturedAudioDataReceiver* receiver, irrklang::ik_s32 sampleRate, irrklang::ESampleFormat sampleFormat, irrklang::ik_s32 channelCount)
 {
 	return recorder->startRecordingCustomHandledAudio(receiver, sampleRate, sampleFormat, channelCount);
 }
 
-void irrklangProxy::IAudioRecorder::stopRecordingAudio(irrklang::IAudioRecorder* recorder)
+void irrklangProxy_IAudioRecorder_stopRecordingAudio(irrklang::IAudioRecorder* recorder)
 {
 	recorder->stopRecordingAudio();
 }
 
-irrklang::ISoundSource* irrklangProxy::IAudioRecorder::addSoundSourceFromRecordedAudio(irrklang::IAudioRecorder* recorder, const char* soundName)
+irrklang::ISoundSource* irrklangProxy_IAudioRecorder_addSoundSourceFromRecordedAudio(irrklang::IAudioRecorder* recorder, const char* soundName)
 {
 	return recorder->addSoundSourceFromRecordedAudio(soundName);
 }
 
-void irrklangProxy::IAudioRecorder::clearRecordedAudioDataBuffer(irrklang::IAudioRecorder* recorder)
+void irrklangProxy_IAudioRecorder_clearRecordedAudioDataBuffer(irrklang::IAudioRecorder* recorder)
 {
 	recorder->clearRecordedAudioDataBuffer();
 }
 
-bool irrklangProxy::IAudioRecorder::isRecording(irrklang::IAudioRecorder* recorder)
+bool irrklangProxy_IAudioRecorder_isRecording(irrklang::IAudioRecorder* recorder)
 {
 	return recorder->isRecording();
 }
 
-irrklang::SAudioStreamFormat irrklangProxy::IAudioRecorder::getAudioFormatForAudioRecorder(irrklang::IAudioRecorder* recorder)
+irrklang::SAudioStreamFormat irrklangProxy_IAudioRecorder_getAudioFormatForAudioRecorder(irrklang::IAudioRecorder* recorder)
 {
 	return recorder->getAudioFormat();
 }
 
-void* irrklangProxy::IAudioRecorder::getRecordedAudioData(irrklang::IAudioRecorder* recorder)
+void* irrklangProxy_IAudioRecorder_getRecordedAudioData(irrklang::IAudioRecorder* recorder)
 {
 	return recorder->getRecordedAudioData();
 }
 
-const char* irrklangProxy::IAudioRecorder::getAudioRecorderDriverName(irrklang::IAudioRecorder* recorder)
+const char* irrklangProxy_IAudioRecorder_getAudioRecorderDriverName(irrklang::IAudioRecorder* recorder)
 {
 	return recorder->getDriverName();
 }
 
 
-void irrklangProxy::ISoundEffectControl::disableAllEffects(irrklang::ISoundEffectControl* control)
+void irrklangProxy_ISoundEffectControl_disableAllEffects(irrklang::ISoundEffectControl* control)
 {
 	control->disableAllEffects();
 }
-bool irrklangProxy::ISoundEffectControl::enableChorusSoundEffect(
+bool irrklangProxy_ISoundEffectControl_enableChorusSoundEffect(
 	irrklang::ISoundEffectControl* control,
 	irrklang::ik_f32 fWetDryMix,
 	irrklang::ik_f32 fDepth,
@@ -1021,17 +1021,17 @@ bool irrklangProxy::ISoundEffectControl::enableChorusSoundEffect(
 	return control->enableChorusSoundEffect(fWetDryMix, fDepth, fFeedback, fFrequency, sinusWaveForm, fDelay, lPhase);
 }
 
-void irrklangProxy::ISoundEffectControl::disableChorusSoundEffect(irrklang::ISoundEffectControl* control)
+void irrklangProxy_ISoundEffectControl_disableChorusSoundEffect(irrklang::ISoundEffectControl* control)
 {
 	control->disableChorusSoundEffect();
 }
 
-bool irrklangProxy::ISoundEffectControl::isChorusSoundEffectEnabled(irrklang::ISoundEffectControl* control)
+bool irrklangProxy_ISoundEffectControl_isChorusSoundEffectEnabled(irrklang::ISoundEffectControl* control)
 {
 	return control->isChorusSoundEffectEnabled();
 }
 
-bool irrklangProxy::ISoundEffectControl::enableCompressorSoundEffect(
+bool irrklangProxy_ISoundEffectControl_enableCompressorSoundEffect(
 	irrklang::ISoundEffectControl* control,
 	irrklang::ik_f32 fGain,
 	irrklang::ik_f32 fAttack,
@@ -1044,17 +1044,17 @@ bool irrklangProxy::ISoundEffectControl::enableCompressorSoundEffect(
 	return control->enableCompressorSoundEffect(fGain, fAttack, fRelease, fThreshold, fRatio, fPredelay);
 }
 
-void irrklangProxy::ISoundEffectControl::disableCompressorSoundEffect(irrklang::ISoundEffectControl* control)
+void irrklangProxy_ISoundEffectControl_disableCompressorSoundEffect(irrklang::ISoundEffectControl* control)
 {
 	control->disableCompressorSoundEffect();
 }
 
-bool irrklangProxy::ISoundEffectControl::isCompressorSoundEffectEnabled(irrklang::ISoundEffectControl* control)
+bool irrklangProxy_ISoundEffectControl_isCompressorSoundEffectEnabled(irrklang::ISoundEffectControl* control)
 {
 	return control->isCompressorSoundEffectEnabled();
 }
 
-bool irrklangProxy::ISoundEffectControl::enableDistortionSoundEffect(
+bool irrklangProxy_ISoundEffectControl_enableDistortionSoundEffect(
 	irrklang::ISoundEffectControl* control,
 	irrklang::ik_f32 fGain,
 	irrklang::ik_f32 fEdge,
@@ -1066,17 +1066,17 @@ bool irrklangProxy::ISoundEffectControl::enableDistortionSoundEffect(
 	return control->enableDistortionSoundEffect(fGain, fEdge, fPostEQCenterFrequency, fPostEQBandwidth, fPreLowpassCutoff);
 }
 
-void irrklangProxy::ISoundEffectControl::disableDistortionSoundEffect(irrklang::ISoundEffectControl* control)
+void irrklangProxy_ISoundEffectControl_disableDistortionSoundEffect(irrklang::ISoundEffectControl* control)
 {
 	control->disableDistortionSoundEffect();
 }
 
-bool irrklangProxy::ISoundEffectControl::isDistortionSoundEffectEnabled(irrklang::ISoundEffectControl* control)
+bool irrklangProxy_ISoundEffectControl_isDistortionSoundEffectEnabled(irrklang::ISoundEffectControl* control)
 {
 	return control->isDistortionSoundEffectEnabled();
 }
 
-bool irrklangProxy::ISoundEffectControl::enableEchoSoundEffect(
+bool irrklangProxy_ISoundEffectControl_enableEchoSoundEffect(
 	irrklang::ISoundEffectControl* control,
 	irrklang::ik_f32 fWetDryMix,
 	irrklang::ik_f32 fFeedback,
@@ -1088,17 +1088,17 @@ bool irrklangProxy::ISoundEffectControl::enableEchoSoundEffect(
 	return control->enableEchoSoundEffect(fWetDryMix, fFeedback, fLeftDelay, fRightDelay, lPanDelay);
 }
 
-void irrklangProxy::ISoundEffectControl::disableEchoSoundEffect(irrklang::ISoundEffectControl* control)
+void irrklangProxy_ISoundEffectControl_disableEchoSoundEffect(irrklang::ISoundEffectControl* control)
 {
 	control->disableEchoSoundEffect();
 }
 
-bool irrklangProxy::ISoundEffectControl::isEchoSoundEffectEnabled(irrklang::ISoundEffectControl* control)
+bool irrklangProxy_ISoundEffectControl_isEchoSoundEffectEnabled(irrklang::ISoundEffectControl* control)
 {
 	return control->isEchoSoundEffectEnabled();
 }
 
-bool irrklangProxy::ISoundEffectControl::enableFlangerSoundEffect(
+bool irrklangProxy_ISoundEffectControl_enableFlangerSoundEffect(
 	irrklang::ISoundEffectControl* control,
 	irrklang::ik_f32 fWetDryMix,
 	irrklang::ik_f32 fDepth,
@@ -1112,32 +1112,32 @@ bool irrklangProxy::ISoundEffectControl::enableFlangerSoundEffect(
 	return control->enableFlangerSoundEffect(fWetDryMix, fDepth, fFeedback, fFrequency, triangleWaveForm, fDelay, lPhase);
 }
 
-void irrklangProxy::ISoundEffectControl::disableFlangerSoundEffect(irrklang::ISoundEffectControl* control)
+void irrklangProxy_ISoundEffectControl_disableFlangerSoundEffect(irrklang::ISoundEffectControl* control)
 {
 	control->disableFlangerSoundEffect();
 }
 
-bool irrklangProxy::ISoundEffectControl::isFlangerSoundEffectEnabled(irrklang::ISoundEffectControl* control)
+bool irrklangProxy_ISoundEffectControl_isFlangerSoundEffectEnabled(irrklang::ISoundEffectControl* control)
 {
 	return control->isFlangerSoundEffectEnabled();
 }
 
-bool irrklangProxy::ISoundEffectControl::enableGargleSoundEffect(irrklang::ISoundEffectControl* control, irrklang::ik_s32 rateHz, bool sinusWaveForm)
+bool irrklangProxy_ISoundEffectControl_enableGargleSoundEffect(irrklang::ISoundEffectControl* control, irrklang::ik_s32 rateHz, bool sinusWaveForm)
 {
 	return control->enableGargleSoundEffect(rateHz, sinusWaveForm);
 }
 
-void irrklangProxy::ISoundEffectControl::disableGargleSoundEffect(irrklang::ISoundEffectControl* control)
+void irrklangProxy_ISoundEffectControl_disableGargleSoundEffect(irrklang::ISoundEffectControl* control)
 {
 	control->disableGargleSoundEffect();
 }
 
-bool irrklangProxy::ISoundEffectControl::isGargleSoundEffectEnabled(irrklang::ISoundEffectControl* control)
+bool irrklangProxy_ISoundEffectControl_isGargleSoundEffectEnabled(irrklang::ISoundEffectControl* control)
 {
 	return control->isGargleSoundEffectEnabled();
 }
 
-bool irrklangProxy::ISoundEffectControl::enableI3DL2ReverbSoundEffect(
+bool irrklangProxy_ISoundEffectControl_enableI3DL2ReverbSoundEffect(
 	irrklang::ISoundEffectControl* control,
 	irrklang::ik_s32 lRoom,
 	irrklang::ik_s32 lRoomHF,
@@ -1156,17 +1156,17 @@ bool irrklangProxy::ISoundEffectControl::enableI3DL2ReverbSoundEffect(
 	return control->enableI3DL2ReverbSoundEffect(lRoom, lRoomHF, flRoomRolloffFactor, flDecayTime, flDecayHFRatio, lReflections, flReflectionsDelay, lReverb, flReverbDelay, flDiffusion, flDensity, flHFReference);
 }
 
-void  irrklangProxy::ISoundEffectControl::disableI3DL2ReverbSoundEffect(irrklang::ISoundEffectControl* control)
+void  irrklangProxy_ISoundEffectControl_disableI3DL2ReverbSoundEffect(irrklang::ISoundEffectControl* control)
 {
 	control->disableI3DL2ReverbSoundEffect();
 }
 
-bool  irrklangProxy::ISoundEffectControl::isI3DL2ReverbSoundEffectEnabled(irrklang::ISoundEffectControl* control)
+bool  irrklangProxy_ISoundEffectControl_isI3DL2ReverbSoundEffectEnabled(irrklang::ISoundEffectControl* control)
 {
 	return control->isI3DL2ReverbSoundEffectEnabled();
 }
 
-bool  irrklangProxy::ISoundEffectControl::enableParamEqSoundEffect(
+bool  irrklangProxy_ISoundEffectControl_enableParamEqSoundEffect(
 	irrklang::ISoundEffectControl* control,
 	irrklang::ik_f32 fCenter,
 	irrklang::ik_f32 fBandwidth,
@@ -1176,17 +1176,17 @@ bool  irrklangProxy::ISoundEffectControl::enableParamEqSoundEffect(
 	return control->enableParamEqSoundEffect(fCenter, fBandwidth, fGain);
 }
 
-void  irrklangProxy::ISoundEffectControl::disableParamEqSoundEffect(irrklang::ISoundEffectControl* control)
+void  irrklangProxy_ISoundEffectControl_disableParamEqSoundEffect(irrklang::ISoundEffectControl* control)
 {
 	control->disableParamEqSoundEffect();
 }
 
-bool  irrklangProxy::ISoundEffectControl::isParamEqSoundEffectEnabled(irrklang::ISoundEffectControl* control)
+bool  irrklangProxy_ISoundEffectControl_isParamEqSoundEffectEnabled(irrklang::ISoundEffectControl* control)
 {
 	return control->isParamEqSoundEffectEnabled();
 }
 
-bool  irrklangProxy::ISoundEffectControl::enableWavesReverbSoundEffect(
+bool  irrklangProxy_ISoundEffectControl_enableWavesReverbSoundEffect(
 	irrklang::ISoundEffectControl* control,
 	irrklang::ik_f32 fInGain,
 	irrklang::ik_f32 fReverbMix,
@@ -1197,243 +1197,243 @@ bool  irrklangProxy::ISoundEffectControl::enableWavesReverbSoundEffect(
 	return control->enableWavesReverbSoundEffect(fInGain, fReverbMix, fReverbTime, fHighFreqRTRatio);
 }
 
-void  irrklangProxy::ISoundEffectControl::disableWavesReverbSoundEffect(irrklang::ISoundEffectControl* control)
+void  irrklangProxy_ISoundEffectControl_disableWavesReverbSoundEffect(irrklang::ISoundEffectControl* control)
 {
 	control->disableWavesReverbSoundEffect();
 }
 
-bool  irrklangProxy::ISoundEffectControl::isWavesReverbSoundEffectEnabled(irrklang::ISoundEffectControl* control)
+bool  irrklangProxy_ISoundEffectControl_isWavesReverbSoundEffectEnabled(irrklang::ISoundEffectControl* control)
 {
 	return control->isWavesReverbSoundEffectEnabled();
 }
 
-void irrklangProxy::ISoundSource::grabSoundSource(irrklang::ISoundSource* source)
+void irrklangProxy_ISoundSource_grabSoundSource(irrklang::ISoundSource* source)
 {
 	source->grab();
 }
 
-void irrklangProxy::ISoundSource::dropSoundSource(irrklang::ISoundSource* source)
+void irrklangProxy_ISoundSource_dropSoundSource(irrklang::ISoundSource* source)
 {
 	source->drop();
 }
 
 
-const irrklang::ik_c8* irrklangProxy::ISoundSource::getNameForSoundSource(irrklang::ISoundSource* source)
+const irrklang::ik_c8* irrklangProxy_ISoundSource_getNameForSoundSource(irrklang::ISoundSource* source)
 {
 	return source->getName();
 }
 
-void irrklangProxy::ISoundSource::setStreamMode(irrklang::ISoundSource* source, irrklang::E_STREAM_MODE mode)
+void irrklangProxy_ISoundSource_setStreamMode(irrklang::ISoundSource* source, irrklang::E_STREAM_MODE mode)
 {
 	source->setStreamMode(mode);
 }
 
-irrklang::E_STREAM_MODE irrklangProxy::ISoundSource::getStreamMode(irrklang::ISoundSource* source)
+irrklang::E_STREAM_MODE irrklangProxy_ISoundSource_getStreamMode(irrklang::ISoundSource* source)
 {
 	return source->getStreamMode();
 }
 
-irrklang::ik_u32 irrklangProxy::ISoundSource::getSoundSourcePlayLength(irrklang::ISoundSource* source)
+irrklang::ik_u32 irrklangProxy_ISoundSource_getSoundSourcePlayLength(irrklang::ISoundSource* source)
 {
 	return source->getPlayLength();
 }
 
-irrklang::SAudioStreamFormat irrklangProxy::ISoundSource::getAudioFormatForSoundSource(irrklang::ISoundSource* source)
+irrklang::SAudioStreamFormat irrklangProxy_ISoundSource_getAudioFormatForSoundSource(irrklang::ISoundSource* source)
 {
 	return source->getAudioFormat();
 }
 
-bool irrklangProxy::ISoundSource::getIsSeekingSupportedForSoundSource(irrklang::ISoundSource* source)
+bool irrklangProxy_ISoundSource_getIsSeekingSupportedForSoundSource(irrklang::ISoundSource* source)
 {
 	return source->getIsSeekingSupported();
 }
 
-void irrklangProxy::ISoundSource::setDefaultVolume(irrklang::ISoundSource* source, irrklang::ik_f32 volume)
+void irrklangProxy_ISoundSource_setDefaultVolume(irrklang::ISoundSource* source, irrklang::ik_f32 volume)
 {
 	source->setDefaultVolume(volume);
 }
 
-irrklang::ik_f32  irrklangProxy::ISoundSource::getDefaultVolume(irrklang::ISoundSource* source)
+irrklang::ik_f32  irrklangProxy_ISoundSource_getDefaultVolume(irrklang::ISoundSource* source)
 {
 	return source->getDefaultVolume();
 }
 
-void irrklangProxy::ISoundSource::setDefaultMinDistance(irrklang::ISoundSource* source, irrklang::ik_f32 minDistance)
+void irrklangProxy_ISoundSource_setDefaultMinDistance(irrklang::ISoundSource* source, irrklang::ik_f32 minDistance)
 {
 	source->setDefaultMinDistance(minDistance);
 }
 
-irrklang::ik_f32 irrklangProxy::ISoundSource::getDefaultMinDistance(irrklang::ISoundSource* source)
+irrklang::ik_f32 irrklangProxy_ISoundSource_getDefaultMinDistance(irrklang::ISoundSource* source)
 {
 	return source->getDefaultMinDistance();
 }
 
-void irrklangProxy::ISoundSource::setDefaultMaxDistance(irrklang::ISoundSource* source, irrklang::ik_f32 maxDistance)
+void irrklangProxy_ISoundSource_setDefaultMaxDistance(irrklang::ISoundSource* source, irrklang::ik_f32 maxDistance)
 {
 	source->setDefaultMaxDistance(maxDistance);
 }
 
-irrklang::ik_f32 irrklangProxy::ISoundSource::getDefaultMaxDistance(irrklang::ISoundSource* source)
+irrklang::ik_f32 irrklangProxy_ISoundSource_getDefaultMaxDistance(irrklang::ISoundSource* source)
 {
 	return source->getDefaultMaxDistance();
 }
 
-void irrklangProxy::ISoundSource::forceReloadAtNextUse(irrklang::ISoundSource* source)
+void irrklangProxy_ISoundSource_forceReloadAtNextUse(irrklang::ISoundSource* source)
 {
 	source->forceReloadAtNextUse();
 }
 
-void irrklangProxy::ISoundSource::setForcedStreamingThreshold(irrklang::ISoundSource* source, irrklang::ik_s32 thresholdBytes)
+void irrklangProxy_ISoundSource_setForcedStreamingThreshold(irrklang::ISoundSource* source, irrklang::ik_s32 thresholdBytes)
 {
 	source->setForcedStreamingThreshold(thresholdBytes);
 }
 
-irrklang::ik_s32 irrklangProxy::ISoundSource::getForcedStreamingThreshold(irrklang::ISoundSource* source)
+irrklang::ik_s32 irrklangProxy_ISoundSource_getForcedStreamingThreshold(irrklang::ISoundSource* source)
 {
 	return source->getForcedStreamingThreshold();
 }
 
-void* irrklangProxy::ISoundSource::getSampleData(irrklang::ISoundSource* source)
+void* irrklangProxy_ISoundSource_getSampleData(irrklang::ISoundSource* source)
 {
 	return source->getSampleData();
 }
 
-void irrklangProxy::ISound::grabSound(irrklang::ISound* sound)
+void irrklangProxy_ISound_grabSound(irrklang::ISound* sound)
 {
 	sound->grab();
 }
 
-void irrklangProxy::ISound::dropSound(irrklang::ISound* sound)
+void irrklangProxy_ISound_dropSound(irrklang::ISound* sound)
 {
 	sound->drop();
 }
 
-irrklang::ISoundSource* irrklangProxy::ISound::getSoundSource(irrklang::ISound* sound)
+irrklang::ISoundSource* irrklangProxy_ISound_getSoundSource(irrklang::ISound* sound)
 {
 	return sound->getSoundSource();
 }
 
-void irrklangProxy::ISound::setIsPaused(irrklang::ISound* sound, bool paused)
+void irrklangProxy_ISound_setIsPaused(irrklang::ISound* sound, bool paused)
 {
 	return sound->setIsPaused(paused);
 }
 
-bool irrklangProxy::ISound::getIsPaused(irrklang::ISound* sound)
+bool irrklangProxy_ISound_getIsPaused(irrklang::ISound* sound)
 {
 	return sound->getIsPaused();
 }
 
-void irrklangProxy::ISound::stop(irrklang::ISound* sound)
+void irrklangProxy_ISound_stop(irrklang::ISound* sound)
 {
 	sound->stop();
 }
 
-irrklang::ik_f32 irrklangProxy::ISound::getCurrentSoundVolume(irrklang::ISound* sound)
+irrklang::ik_f32 irrklangProxy_ISound_getCurrentSoundVolume(irrklang::ISound* sound)
 {
 	return sound->getVolume();
 }
 
-void irrklangProxy::ISound::setCurrentSoundVolume(irrklang::ISound* sound, irrklang::ik_f32 volume)
+void irrklangProxy_ISound_setCurrentSoundVolume(irrklang::ISound* sound, irrklang::ik_f32 volume)
 {
 	sound->setVolume(volume);
 }
 
-void irrklangProxy::ISound::setPan(irrklang::ISound* sound, irrklang::ik_f32 pan)
+void irrklangProxy_ISound_setPan(irrklang::ISound* sound, irrklang::ik_f32 pan)
 {
 	sound->setPan(pan);
 }
 
-irrklang::ik_f32 irrklangProxy::ISound::getPan(irrklang::ISound* sound)
+irrklang::ik_f32 irrklangProxy_ISound_getPan(irrklang::ISound* sound)
 {
 	return sound->getPan();
 }
 
-bool irrklangProxy::ISound::isSoundLooped(irrklang::ISound* sound)
+bool irrklangProxy_ISound_isSoundLooped(irrklang::ISound* sound)
 {
 	return sound->isLooped();
 }
 
-void irrklangProxy::ISound::setSoundIsLooped(irrklang::ISound* sound, bool looped)
+void irrklangProxy_ISound_setSoundIsLooped(irrklang::ISound* sound, bool looped)
 {
 	sound->setIsLooped(looped);
 }
 
-bool irrklangProxy::ISound::isSoundFinished(irrklang::ISound* sound)
+bool irrklangProxy_ISound_isSoundFinished(irrklang::ISound* sound)
 {
 	return sound->isFinished();
 }
 
-void irrklangProxy::ISound::setSoundMinDistance(irrklang::ISound* sound, irrklang::ik_f32 min)
+void irrklangProxy_ISound_setSoundMinDistance(irrklang::ISound* sound, irrklang::ik_f32 min)
 {
 	sound->setMinDistance(min);
 }
 
-irrklang::ik_f32 irrklangProxy::ISound::getSoundMinDistance(irrklang::ISound* sound)
+irrklang::ik_f32 irrklangProxy_ISound_getSoundMinDistance(irrklang::ISound* sound)
 {
 	return sound->getMinDistance();
 }
 
-void irrklangProxy::ISound::setSoundMaxDistance(irrklang::ISound* sound, irrklang::ik_f32 max)
+void irrklangProxy_ISound_setSoundMaxDistance(irrklang::ISound* sound, irrklang::ik_f32 max)
 {
 	sound->setMaxDistance(max);
 }
 
-irrklang::ik_f32 irrklangProxy::ISound::getSoundMaxDistance(irrklang::ISound* sound)
+irrklang::ik_f32 irrklangProxy_ISound_getSoundMaxDistance(irrklang::ISound* sound)
 {
 	return sound->getMaxDistance();
 }
 
-void irrklangProxy::ISound::setSoundPosition(irrklang::ISound* sound, const irrklang::vec3df& position)
+void irrklangProxy_ISound_setSoundPosition(irrklang::ISound* sound, const irrklang::vec3df& position)
 {
 	sound->setPosition(position);
 }
 
-void irrklangProxy::ISound::getSoundPosition(irrklang::ISound* sound, irrklang::vec3df& result)
+void irrklangProxy_ISound_getSoundPosition(irrklang::ISound* sound, irrklang::vec3df& result)
 {
 	result = sound->getPosition();
 }
 
-void irrklangProxy::ISound::setSoundVelocity(irrklang::ISound* sound, const irrklang::vec3df& vel)
+void irrklangProxy_ISound_setSoundVelocity(irrklang::ISound* sound, const irrklang::vec3df& vel)
 {
 	sound->setVelocity(vel);
 }
 
-void irrklangProxy::ISound::getSoundVelocity(irrklang::ISound* sound, irrklang::vec3df& result)
+void irrklangProxy_ISound_getSoundVelocity(irrklang::ISound* sound, irrklang::vec3df& result)
 {
 	result = sound->getVelocity();
 }
 
-irrklang::ik_u32 irrklangProxy::ISound::getPlayPosition(irrklang::ISound* sound)
+irrklang::ik_u32 irrklangProxy_ISound_getPlayPosition(irrklang::ISound* sound)
 {
 	return sound->getPlayPosition();
 }
 
-bool irrklangProxy::ISound::setPlayPosition(irrklang::ISound* sound, irrklang::ik_u32 pos)
+bool irrklangProxy_ISound_setPlayPosition(irrklang::ISound* sound, irrklang::ik_u32 pos)
 {
 	return sound->setPlayPosition(pos);
 }
 
-bool irrklangProxy::ISound::setPlaybackSpeed(irrklang::ISound* sound, irrklang::ik_f32 speed)
+bool irrklangProxy_ISound_setPlaybackSpeed(irrklang::ISound* sound, irrklang::ik_f32 speed)
 {
 	return sound->setPlaybackSpeed(speed);
 }
 
-irrklang::ik_f32 irrklangProxy::ISound::getPlaybackSpeed(irrklang::ISound* sound)
+irrklang::ik_f32 irrklangProxy_ISound_getPlaybackSpeed(irrklang::ISound* sound)
 {
 	return sound->getPlaybackSpeed();
 }
 
-irrklang::ik_u32 irrklangProxy::ISound::getSoundPlayLength(irrklang::ISound* sound)
+irrklang::ik_u32 irrklangProxy_ISound_getSoundPlayLength(irrklang::ISound* sound)
 {
 	return sound->getPlayLength();
 }
 
-irrklang::ISoundEffectControl* irrklangProxy::ISound::getSoundEffectControl(irrklang::ISound* sound)
+irrklang::ISoundEffectControl* irrklangProxy_ISound_getSoundEffectControl(irrklang::ISound* sound)
 {
 	return sound->getSoundEffectControl();
 }
 
-void irrklangProxy::ISound::setSoundStopEventReceiver(irrklang::ISound* sound, irrklang::ISoundStopEventReceiver* receiver, void* userData)
+void irrklangProxy_ISound_setSoundStopEventReceiver(irrklang::ISound* sound, irrklang::ISoundStopEventReceiver* receiver, void* userData)
 {
 	sound->setSoundStopEventReceiver(receiver, userData);
 }

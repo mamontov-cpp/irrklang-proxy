@@ -1,0 +1,4 @@
+g++ -o tests/x32/linux/main-linux-debug  -m32 -O0 -g tests/main.cpp  -I$IRRKLANG_ROOT/../x32/include  -Llib/x32/linux  -L$IRRKLANG_ROOT/../x32/bin/linux-gcc   -lirrklang-proxy-debug -l:libIrrKlang.so -pthread
+g++ -o tests/x32/linux/main-linux-release -m32 -O2 -g tests/main.cpp  -I$IRRKLANG_ROOT/../x32/include  -Llib/x32/linux  -L$IRRKLANG_ROOT/../x32/bin/linux-gcc  -lirrklang-proxy-release -l:libIrrKlang.so -pthread
+g++ -o tests/x64/linux/main-linux-debug  -march=x86-64  -O0 -g tests/main.cpp  -I$IRRKLANG_ROOT/../x64/include  -Llib/x64/linux  -L$IRRKLANG_ROOT/../x64/bin/linux-gcc-64   -lirrklang-proxy-debug -l:libIrrKlang.so -pthread
+g++ -o tests/x64/linux/main-linux-release -march=x86-64  -O2 -g tests/main.cpp  -I$IRRKLANG_ROOT/../x64/include  -Llib/x64/linux  -L$IRRKLANG_ROOT/../x64/bin/linux-gcc-64  -lirrklang-proxy-release -l:libIrrKlang.so -pthread

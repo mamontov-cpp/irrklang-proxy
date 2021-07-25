@@ -3,10 +3,10 @@
 #include <stdio.h>
 #include <irrKlang.h>
 #include "../include/irrklang-proxy.h"
-#include <windows.h>
 
 // include console I/O methods (conio.h for windows, our wrapper in linux)
 #if defined(WIN32)
+#include <windows.h>
 #include <conio.h>
 #else
 
